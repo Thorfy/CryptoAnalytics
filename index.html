@@ -1,8 +1,173 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<html lang="en">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body>
-    <script>
-      
-    </script>
-</body>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="app/asset/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <style type="text/css">
+            .statTopCard {
+                height: 140px;
+            }
+
+        </style>
+    </head>
+    <body style="height:1500px; background-color: #F6F6F6">
+
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
+        <nav id="navBarTop" class="navbar navbar-expand-lg navbar-dark bg-primary ">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <nav class="sideBar col-md-2" aria-label="sideBar">
+            //to do "SIDEBAR"
+        </nav>
+        <nav aria-label="container-fluid">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data</li>
+                </ol>
+            </nav>
+            <nav>
+                <div class="container">
+                    <div id="statBar" class="row">
+                        <div class="col-md">
+                            <div class="card border-danger mb-3 statTopCard">
+                                <div class="card-body text-center text-danger ">
+                                    <h5 class="card-title">BitCoin</h5>
+                                    <p class="card-text">$7 536.98</p>
+                                    <p class="card-text"><span class="oi oi-chevron-bottom"></span> 5%</p>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-md">
+                            <div class="card border-secondary mb-3 statTopCard">
+                                <div class="card-body text-center text-secondary ">
+                                    <h5 class="card-title">Etherum</h5>
+                                    <p class="card-text">$575.94</p>
+                                    <p class="card-text"><span class="oi oi-chevron-top"></span> 0.5%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="card border-success mb-3 statTopCard">
+                                <div class="card-body text-center text-success">
+                                    <h5 class="card-title">DogeCoin</h5>
+                                    <p class="card-text">$0.003343</p>
+                                    <p class="card-text"><span class="oi oi-chevron-top"></span> 15%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="card border-danger mb-3 statTopCard">
+                                <div class="card-body text-center text-danger ">
+                                    <h5 class="card-title">KappaCoin</h5>
+                                    <p class="card-text">$9 999.99</p>
+                                    <p class="card-text"><span class="oi oi-chevron-bottom"></span> 9%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="card border-secondary mb-3 statTopCard">
+                                <div class="card-body text-center text-secondary ">
+                                    <h5 class="card-title">LiteCoin</h5>
+                                    <p class="card-text">$155.78</p>
+                                    <p class="card-text"><span class="oi oi-chevron-bottom"></span> 0.25%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="card border-secondary mb-3 statTopCard">
+                                <div class="card-body text-center text-secondary ">
+                                    <h5 class="card-title">Ripple</h5>
+                                    <p class="card-text">$0.647752</p>
+                                    <p class="card-text"><span class="oi oi-chevron-top"></span> 0.60%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <nav>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md mb-10">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="container" style="height: 400px; min-width: 310px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </nav>
+
+        <script>
+            $(document).ready(function () {
+                $(document).scroll(function () {
+                    if ($(document).scrollTop() < 100) {
+                        $("#navBarTop").removeClass("fixed-top");
+                    } else {
+                        $("#navBarTop").addClass("fixed-top");
+                    }
+                });
+
+            });
+        </script>
+        <script src="app/inc/js/testgraph.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $(".highcharts-credits").html("");
+            });
+        </script>
+
+    </body>
+</html>
