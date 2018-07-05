@@ -25,7 +25,7 @@
 
     </style>
 </head>
-<body ng-app style="height:1500px; background-color: #F6F6F6">
+<body style="height:1500px; background-color: #F6F6F6" ng-app="cryptoAnalytics">
 
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
@@ -80,7 +80,7 @@
         -->
         <nav>
             <div class="container">
-                <div id="statBar" class="row" ng-init="currencies=['BTC', 'ETH', 'XPR', 'LTC', 'EOS', 'BCH']">
+                <div id="statBar" class="row" ng-controller="statBarCtrl">
                     <div class="col-md" ng-repeat="currency in currencies">
                         <div class="card border-danger mb-3 statTopCard">
                             <div class="card-body text-center text-danger ">
@@ -99,7 +99,7 @@
                     <div class="col-md mb-10">
                         <div class="card">
                             <div class="card-body">
-                                <div id="container" style="height: 400px; min-width: 310px"></div>
+                                <div id="container" style="height: 400px; min-width: 310px" ng-controller="statPannelChart"></div>
                             </div>
                         </div>
                     </div>
@@ -128,5 +128,6 @@
         });
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
+    <script src="app/inc/js/controller.js"></script>
 </body>
 </html>
