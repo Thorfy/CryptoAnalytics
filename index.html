@@ -59,9 +59,11 @@
                     <a class="nav-link disabled" href="#">Premium</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Crypto Monnaies" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+            <form class="form-inline my-2 my-lg-0" ng-controller="searchCtrl">
+                <input class="form-control mr-sm-2" type="search" placeholder="Crypto Monnaies" aria-label="Search" ng-model="searchQuery">
+                <ul>
+                    <li ng-repeat="test in searchResults | filter: {test.FullName: searchQuery} | limitTo: 3">{{test.FullName}}</li>
+                </ul>
             </form>
         </div>
     </nav>
@@ -82,11 +84,11 @@
             <div class="container">
                 <div id="statBar" class="row" ng-controller="statBarCtrl">
                     <div class="col-md" ng-repeat="currency in currencies">
-                        <div class="card border-danger mb-3 statTopCard">
-                            <div class="card-body text-center text-danger ">
-                                <h5 class="card-title">{{currency}}</h5>
-                                <p class="card-text">$7 536.98</p>
-                                <p class="card-text"><span class="oi oi-chevron-bottom"></span> 5%</p>
+                        <div class="card border-{{currency.classInfo}} mb-3 statTopCard">
+                            <div class="card-body text-center text-{{currency.classInfo}} ">
+                                <h5 class="card-title">{{currency.title}}</h5>
+                                <p class="card-text">{{currency.sign + currency.price}}</p>
+                                <p class="card-text"><span class="oi oi-chevron-{{currency.chevron}}"></span> {{currency.percent}}%</p>
                             </div>
                         </div> 
                     </div>
@@ -99,7 +101,7 @@
                     <div class="col-md mb-10">
                         <div class="card">
                             <div class="card-body">
-                                <div id="container" style="height: 400px; min-width: 310px" ng-controller="statPannelChart"></div>
+                                <div id="container" style="height: 400px; min-width: 310px" ng-controller="statPannelChartCtrl"></div>
                             </div>
                         </div>
                     </div>
