@@ -1,4 +1,36 @@
-var app = angular.module("cryptoAnalytics", []);
+var app = angular.module("cryptoAnalytics", ["ngRoute"]);
+
+app.config(function($routeProvider){
+    $routeProvider
+    .when('/', {templateUrl:'app/inc/views/home.html'})
+    .when('/currencies', {templateUrl:'app/inc/views/currencies.html'})
+    .otherwise({redirectTo:'/'})
+
+})
+
+app.factory('GetCurrencies', function($http, $q){
+   var deferred = $q.defer()
+    $http.get("app/inc/json/staticSearch.json").success(function(data, status){
+        deferred.resolve(data.Data)
+    }).error(function(data, status){
+        deferred.reject('pas de connection')
+    })
+   return deferred.promise
+})
+
+app.controller('currenciesCtrl', function($scope, GetCurrencies){
+    $scope.currencies = GetCurrencies.then(function(response){
+      $scope.currencies = response
+    },function(error){
+        $scope.currencies = error
+    })
+})
+
+
+
+
+
+
 app.controller("statBarCtrl",function ($scope){
 	$scope.currencies = [
     {
@@ -100,11 +132,11 @@ app.controller("statPannelChartCtrl",function ($scope){
     });
  });
 });
-app.controller("searchCtrl",function ($scope){
+app.controller("searchCtrl", function ($scope){
 
-    $.getJSON('app/inc/json/staticSearch.json', function(response){
-        $scope.searchResults = response.Data;
-    })
+    // $.getJSON('app/inc/json/staticSearch.json', function(response){
+    //     $scope.searchResults = response.Data;
+    // })
 
     // $scope.search = function(){
     //     if($scope.searchQuery){
@@ -123,3 +155,4 @@ app.controller("searchCtrl",function ($scope){
 
 
 });
+

@@ -31,7 +31,7 @@
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 
     <nav id="navBarTop" class="navbar navbar-expand-lg navbar-dark bg-primary ">
-        <a class="navbar-brand" href="#">CryptoAnalytics</a>
+        <a class="navbar-brand" href="#/">CryptoAnalytics</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -39,10 +39,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Accueil <span class="sr-only">(Actuelle)</span></a>
+                    <a class="nav-link" href="#/">Accueil <span class="sr-only">(Actuelle)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">CryptoMonnaies</a>
+                    <a class="nav-link" href="#/currencies">CryptoMonnaies</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,16 +59,10 @@
                     <a class="nav-link disabled" href="#">Premium</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" ng-controller="searchCtrl">
-                <input class="form-control mr-sm-2" type="search" placeholder="Crypto Monnaies" aria-label="Search" ng-model="searchQuery">
-                <ul>
-                    <li ng-repeat="test in searchResults | filter: {test.FullName: searchQuery} | limitTo: 3">{{test.FullName}}</li>
-                </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Crypto Monnaies" aria-label="Search">
             </form>
         </div>
-    </nav>
-    <nav class="sideBar col-md-2" aria-label="sideBar">
-        //to do "SIDEBAR"
     </nav>
     <nav aria-label="container-fluid">
             <!--
@@ -80,56 +74,28 @@
                 </ol>
             </nav>
         -->
-        <nav>
-            <div class="container">
-                <div id="statBar" class="row" ng-controller="statBarCtrl">
-                    <div class="col-md" ng-repeat="currency in currencies">
-                        <div class="card border-{{currency.classInfo}} mb-3 statTopCard">
-                            <div class="card-body text-center text-{{currency.classInfo}} ">
-                                <h5 class="card-title">{{currency.title}}</h5>
-                                <p class="card-text">{{currency.sign + currency.price}}</p>
-                                <p class="card-text"><span class="oi oi-chevron-{{currency.chevron}}"></span> {{currency.percent}}%</p>
-                            </div>
-                        </div> 
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <nav>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md mb-10">
-                        <div class="card">
-                            <div class="card-body">
-                                <div id="container" style="height: 400px; min-width: 310px" ng-controller="statPannelChartCtrl"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </nav>
+        <div ng-view></div>
 
-    <script>
-        $(document).ready(function () {
-            $(document).scroll(function () {
-                if ($(document).scrollTop() < 100) {
-                    $("#navBarTop").removeClass("fixed-top");
-                } else {
-                    $("#navBarTop").addClass("fixed-top");
-                }
+        <script>
+            $(document).ready(function () {
+                $(document).scroll(function () {
+                    if ($(document).scrollTop() < 100) {
+                        $("#navBarTop").removeClass("fixed-top");
+                    } else {
+                        $("#navBarTop").addClass("fixed-top");
+                    }
+                });
+
             });
+        </script>
 
-        });
-    </script>
-    <script src="app/inc/js/testgraph.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $(".highcharts-credits").html("");
-        });
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
-    <script src="app/inc/js/controller.js"></script>
-</body>
-</html>
+        <script>
+            $(document).ready(function () {
+                $(".highcharts-credits").html("");
+            });
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.2.32/angular-route.min.js"></script>
+        <script src="app/inc/js/controller.js"></script>
+    </body>
+    </html>

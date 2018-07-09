@@ -1,0 +1,20 @@
+<h1>currencies</h1>
+
+<div class="container" ng-controller="currenciesCtrl">
+	<table class="table">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col">Symbol</th>
+				<th scope="col">Name</th>
+				<th scope="col">FullName</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="currency in currencies">
+				<td>{{currency.Symbol}}</td>
+				<td>{{currency.CoinName}}</td>
+				<td>{{currency.FullName}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

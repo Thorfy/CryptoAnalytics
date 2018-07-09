@@ -40,7 +40,7 @@ function getHistoricalHour($fsym, $tsym, $iLimit = 100) {
  * return jsonFlux of the result;
  */
 
-function getpriceHistorical($fsym, $tsyms, $iTimestamp) {
+function getPriceHistorical($fsym, $tsyms, $iTimestamp) {
     $sTSyms = implode(",", $tsyms);
     $sUrl = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=' . $fsym . '&tsyms=' . $sTSyms . '&ts=' . $iTimestamp;
     return buildCurl($sUrl);
