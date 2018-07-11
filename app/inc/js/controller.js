@@ -20,7 +20,7 @@ return deferred.promise
 })
 
 app.factory('GetInfoBySymbol', function($http, $q){
-    var info = {
+    return {
         fullData: function(fsyms, tsyms){
             var deferred = $q.defer()
             $http.get("cryptoAnaliticsApi/inc/getPrice.inc.php/?function=getPriceMultiFull&fsym="+fsyms+"&tsym="+tsyms).success(function(data, status){
@@ -30,9 +30,7 @@ app.factory('GetInfoBySymbol', function($http, $q){
             })
             return deferred.promise
         }
-    }
-    return info
-    
+    }    
 
 })
 
@@ -46,7 +44,7 @@ app.controller('currenciesCtrl', function($scope, GetSymbol){
 
 app.controller('currencyCtrl', function($scope, $routeParams, GetInfoBySymbol){
     console.log($routeParams.symbol)
-    $scope.currencyData = GetInfoBySymbol.fullData($routeParams.symbol,["USD"]).then(function(response){
+    $scope.currencyData = GetInfoBySymbol.fullData($routeParams.symbol,["USD"].toString()).then(function(response){
         $scope.currencyData = response
     },function(error){
         $scope.currencyData = error
