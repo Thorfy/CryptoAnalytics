@@ -34,6 +34,20 @@ function getPriceMulti($fsyms, $tsyms) {
     return buildCurl($sUrl);
 }
 
+/*
+ * *api function getPriceMultiFullData
+ * *(array) params 1: cryptoCurrencySymbol; (array) params 2: traditional currency
+ * *return jsonFlux of the result
+ */
+
+function getPriceMultiFull($fsyms, $tsyms) {
+    $sTSyms = implode(",", $tsyms);
+    $sFSyms = implode(",", $fsyms);
+    $sUrl = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=' . $sFSyms . '&tsyms=' . $sTSyms;
+    echo var_export($sUrl,true);
+    return buildCurl($sUrl);
+}
+
 // test zone: you just need to call this page and uncomment
 print_r(getPrice("BTC", array("USD", "EUR")));
 print_r(getPriceMulti(array("BTC", "ETH"), array("USD", "EUR")));

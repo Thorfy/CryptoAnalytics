@@ -11,35 +11,57 @@ app.config(function($routeProvider){
 
 app.factory('GetSymbol', function($http, $q){
    var deferred = $q.defer()
-    $http.get("app/inc/json/staticSearch.json").success(function(data, status){
-        deferred.resolve(data)
-    }).error(function(data, status){
-        deferred.reject('pas de connection')
-    })
-   return deferred.promise
+   $http.get("app/inc/json/staticSearch.json").success(function(data, status){
+    deferred.resolve(data)
+}).error(function(data, status){
+    deferred.reject('pas de connection')
+})
+return deferred.promise
+})
+
+app.factory('GetInfoBySymbol', function($http, $q){
+    var info = {
+        fullData: function(fsyms, tsyms){
+            var deferred = $q.defer()
+            $http.get("cryptoAnaliticsApi/inc/getPrice.inc.php/?function=getPriceMultiFull&fsym="+fsyms+"&tsym="+tsyms).success(function(data, status){
+                deferred.resolve(data)
+            }).error(function(data, status){
+                deferred.reject('pas de connection')
+            })
+            return deferred.promise
+        }
+    }
+    return info
+    
+
 })
 
 app.controller('currenciesCtrl', function($scope, GetSymbol){
     $scope.currencies = GetSymbol.then(function(response){
       $scope.currencies = response
-    },function(error){
-        $scope.currencies = error
-    })
+  },function(error){
+    $scope.currencies = error
+})
 })
 
-app.controller('currencyCtrl', function($scope, $routeParams){
-    console.log($routeParams)
+app.controller('currencyCtrl', function($scope, $routeParams, GetInfoBySymbol){
+    console.log($routeParams.symbol)
+    $scope.currencyData = GetInfoBySymbol.fullData($routeParams.symbol,["USD"]).then(function(response){
+        $scope.currencyData = response
+    },function(error){
+        $scope.currencyData = error
+    })
 })
 
 
 app.controller('searchCtrl', function ($scope, GetSymbol){
     $scope.symbols = GetSymbol.then(function(response){
         console.log(response)
-      $scope.symbols = response
+        $scope.symbols = response
     },function(error){
         $scope.symbols = error
     })
-});
+})
 
 app.controller("statBarCtrl",function ($scope){
 	$scope.currencies = [
