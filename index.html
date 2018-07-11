@@ -8,27 +8,26 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- open-iconic-bootstrap CSS -->
-    <!-- local <link href="app/asset/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">-->
-    <!-- CDN --><link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css" rel="stylesheet">
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-        <style type="text/css">
-        .statTopCard {
-            height: 140px;
-        }
-
-    </style>
+    <style type="text/css">
+    .statTopCard {
+        height: 140px;
+        margin-top: 15px;
+    }
+</style>
 </head>
-<body style="height:1500px; background-color: #F6F6F6" ng-app="cryptoAnalytics">
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.2.32/angular-route.min.js"></script>
+<script src="app/inc/js/controller.js"></script>
 
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<body style="background-color: #F6F6F6" ng-app="cryptoAnalytics">
 
     <nav id="navBarTop" class="navbar navbar-expand-lg navbar-dark bg-primary ">
         <a class="navbar-brand" href="#/">CryptoAnalytics</a>
@@ -59,43 +58,34 @@
                     <a class="nav-link disabled" href="#">Premium</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Crypto Monnaies" aria-label="Search">
-            </form>
-        </div>
-    </nav>
-    <nav aria-label="container-fluid">
-            <!--
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Library</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Data</li>
-                </ol>
-            </nav>
-        -->
-        <div ng-view></div>
+            <form class="form-inline my-2 my-lg-0" ng-controller="searchCtrl">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Crypto Monnaies" ng-model="searchInput">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#" ng-repeat="symbol in symbols.symbol | filter:searchInput | limitTo:5 ">{{symbol}}</a>
+                      </div>
+                  </div>
+              </div>
 
-        <script>
-            $(document).ready(function () {
-                $(document).scroll(function () {
-                    if ($(document).scrollTop() < 100) {
-                        $("#navBarTop").removeClass("fixed-top");
-                    } else {
-                        $("#navBarTop").addClass("fixed-top");
-                    }
-                });
+          </form>
+      </div>
+  </nav>
+  <div class="container">
+    <div ng-view></div>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        $(document).scroll(function () {
+            if ($(document).scrollTop() < 100) {
+                $("#navBarTop").removeClass("fixed-top");
+            } else {
+                $("#navBarTop").addClass("fixed-top");
+            }
+        });
 
-            });
-        </script>
-
-        <script>
-            $(document).ready(function () {
-                $(".highcharts-credits").html("");
-            });
-        </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
-        <script src="https://code.angularjs.org/1.2.32/angular-route.min.js"></script>
-        <script src="app/inc/js/controller.js"></script>
-    </body>
-    </html>
+    });
+</script>
+</html>

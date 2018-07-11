@@ -1,28 +1,24 @@
-<nav>
-	<div class="container">
-		<div id="statBar" class="row" ng-controller="statBarCtrl">
-			<div class="col-md" ng-repeat="currency in currencies">
-				<div class="card border-{{currency.classInfo}} mb-3 statTopCard">
-					<div class="card-body text-center text-{{currency.classInfo}} ">
-						<h5 class="card-title">{{currency.title}}</h5>
-						<p class="card-text">{{currency.sign + currency.price}}</p>
-						<p class="card-text"><span class="oi oi-chevron-{{currency.chevron}}"></span> {{currency.percent}}%</p>
-					</div>
-				</div> 
-			</div>
+<div class="container">
+	<div id="statBar" class="row" ng-controller="statBarCtrl">
+		<div class="col-md" ng-repeat="currency in currencies">
+			<div class="card border-{{currency.classInfo}} mb-3 statTopCard">
+				<div class="card-body text-center text-{{currency.classInfo}} ">
+					<h5 class="card-title">{{currency.title}}</h5>
+					<p class="card-text">{{currency.sign + currency.price}}</p>
+					<p class="card-text"><span class="oi oi-chevron-{{currency.chevron}}"></span> {{currency.percent}}%</p>
+				</div>
+			</div> 
 		</div>
 	</div>
-</nav>
-<nav>
-	<div class="container">
-		<div class="row">
-			<div class="col-md mb-10">
-				<div class="card">
-					<div class="card-body">
-						<div id="container" style="height: 400px; min-width: 310px" ng-controller="statPannelChartCtrl"></div>
-					</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md mb-10">
+			<div class="card">
+				<div class="card-body">
+					<div id="container" style="height: 400px; min-width: 310px" ng-controller="statPannelChartCtrl"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-</nav>
+</div>

@@ -3,33 +3,43 @@ var app = angular.module("cryptoAnalytics", ["ngRoute"]);
 app.config(function($routeProvider){
     $routeProvider
     .when('/', {templateUrl:'app/inc/views/home.html'})
-    .when('/currencies', {templateUrl:'app/inc/views/currencies.html'})
+    .when('/currencies', {templateUrl:'app/inc/views/currencies.html', controller:'currenciesCtrl'})
+    .when('/currencies/:symbol', {templateUrl:'app/inc/views/currency.html', controller:'currencyCtrl'})
     .otherwise({redirectTo:'/'})
 
 })
 
-app.factory('GetCurrencies', function($http, $q){
+app.factory('GetSymbol', function($http, $q){
    var deferred = $q.defer()
     $http.get("app/inc/json/staticSearch.json").success(function(data, status){
-        deferred.resolve(data.Data)
+        deferred.resolve(data)
     }).error(function(data, status){
         deferred.reject('pas de connection')
     })
    return deferred.promise
 })
 
-app.controller('currenciesCtrl', function($scope, GetCurrencies){
-    $scope.currencies = GetCurrencies.then(function(response){
+app.controller('currenciesCtrl', function($scope, GetSymbol){
+    $scope.currencies = GetSymbol.then(function(response){
       $scope.currencies = response
     },function(error){
         $scope.currencies = error
     })
 })
 
+app.controller('currencyCtrl', function($scope, $routeParams){
+    console.log($routeParams)
+})
 
 
-
-
+app.controller('searchCtrl', function ($scope, GetSymbol){
+    $scope.symbols = GetSymbol.then(function(response){
+        console.log(response)
+      $scope.symbols = response
+    },function(error){
+        $scope.symbols = error
+    })
+});
 
 app.controller("statBarCtrl",function ($scope){
 	$scope.currencies = [
@@ -132,27 +142,5 @@ app.controller("statPannelChartCtrl",function ($scope){
     });
  });
 });
-app.controller("searchCtrl", function ($scope){
 
-    // $.getJSON('app/inc/json/staticSearch.json', function(response){
-    //     $scope.searchResults = response.Data;
-    // })
-
-    // $scope.search = function(){
-    //     if($scope.searchQuery){
-    //         console.log($scope.searchQuery)
-    //         let output = []
-    //         let countResult = 0
-    //         for(let obj in $scope.jsonSearch){
-    //             if($scope.jsonSearch[obj].FullName.includes($scope.searchQuery)){
-    //                 output.push($scope.jsonSearch[obj]);
-    //                 countResult++
-    //             }
-    //         }
-    //         return $scope.searchResults = output;
-    //     }
-    // }
-
-
-});
 
