@@ -55,26 +55,23 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Premium</a>
+                    <a class="nav-link disabled" href="">Premium</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" ng-controller="searchCtrl">
+            <form class="form-inline" ng-controller="searchCtrl">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Crypto Monnaies" ng-model="searchInput">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#" ng-repeat="symbol in symbols.symbol | filter:searchInput | limitTo:5 ">{{symbol}}</a>
-                      </div>
-                  </div>
-              </div>
-
-          </form>
-      </div>
-  </nav>
-  <div class="container">
-    <div ng-view></div>
-</div>
+                    <div class="dropdown-menu" ng-class="searchInput.length ? 'show' : ''">
+                        <a class="dropdown-item" href="" ng-repeat="symbol in filteredSymbols = (symbols.symbol | filter:searchInput | limitTo:5) ">{{symbol}}</a>
+                        <a class="dropdown-item" ng-hide="filteredSymbols.length">Aucune monnaie trouvée.</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+    <div class="container">
+        <div ng-view></div>
+    </div>
 </body>
 <script>
     $(document).ready(function () {
