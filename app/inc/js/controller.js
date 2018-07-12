@@ -9,42 +9,44 @@ app.config(function($routeProvider){
 
 })
 
-app.factory('GetSymbol', function($http, $q){
-   var deferred = $q.defer()
-   $http.get("app/inc/json/staticSearch.json").success(function(data, status){
-    deferred.resolve(data)
-}).error(function(data, status){
-    deferred.reject('pas de connection')
-})
-return deferred.promise
-})
 
-app.factory('GetInfoBySymbol', function($http, $q){
-    return {
-        fullData: function(fsyms, tsyms){
-            var deferred = $q.defer()
-            $http.get("cryptoAnaliticsApi/inc/getPrice.inc.php/?function=getPriceMultiFull&fsym="+fsyms+"&tsym="+tsyms).success(function(data, status){
+app.factory('GetApiInfo', function($http, $q){
+    var deferred = $q.defer()
+    var apiInfo = {
+        getFullData: function(fsyms, tsyms){
+
+            $http.get("cryptoAnaliticsApi/fonction_api/apiPrice.php/?function=getPriceMultiFull&fsyms="+fsyms.toString()+"&tsyms="+tsyms.toString()).success(function(data, status){
+                deferred.resolve(data)
+            }).error(function(data, status){
+                deferred.reject('pas de connection')
+            })
+            return deferred.promise
+        },
+        getSymbol: function(){
+
+            $http.get("app/inc/json/staticSearch.json").success(function(data, status){
                 deferred.resolve(data)
             }).error(function(data, status){
                 deferred.reject('pas de connection')
             })
             return deferred.promise
         }
-    }    
+    }
+    return apiInfo    
 
 })
 
-app.controller('currenciesCtrl', function($scope, GetSymbol){
-    $scope.currencies = GetSymbol.then(function(response){
+app.controller('currenciesCtrl', function($scope, GetApiInfo){
+    $scope.currencies = GetApiInfo.getSymbol().then(function(response){
       $scope.currencies = response
   },function(error){
     $scope.currencies = error
 })
 })
 
-app.controller('currencyCtrl', function($scope, $routeParams, GetInfoBySymbol){
+app.controller('currencyCtrl', function($scope, $routeParams, GetApiInfo){
     console.log($routeParams.symbol)
-    $scope.currencyData = GetInfoBySymbol.fullData($routeParams.symbol,["USD"].toString()).then(function(response){
+    $scope.currencyData = GetApiInfo.getFullData($routeParams.symbol,["USD"]).then(function(response){
         $scope.currencyData = response
     },function(error){
         $scope.currencyData = error
@@ -52,8 +54,8 @@ app.controller('currencyCtrl', function($scope, $routeParams, GetInfoBySymbol){
 })
 
 
-app.controller('searchCtrl', function ($scope, GetSymbol){
-    $scope.symbols = GetSymbol.then(function(response){
+app.controller('searchCtrl', function ($scope, GetApiInfo){
+    $scope.symbols = GetApiInfo.getSymbol().then(function(response){
         console.log(response)
         $scope.symbols = response
     },function(error){
