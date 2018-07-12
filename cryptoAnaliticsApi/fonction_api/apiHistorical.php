@@ -1,6 +1,21 @@
 <?php
 
 require('../core/core.php');
+if ($_GET['function']) {
+	$function = $_GET['function'];
+	if($_GET['fsyms']){
+		$fsyms = $_GET['fsyms'];
+	}else{
+		$fsyms = ["BTC"];
+	}
+
+	if($_GET['tsyms']){
+		$tsyms = $_GET['tsyms'];
+	}else{
+		$tsyms = ["USD"];
+	}
+	echo $function($fsyms, $tsyms);
+}
 /*
  * apiHistorical is a fonction of our api
  * This return actual price of 1 or multiple currency
@@ -14,7 +29,7 @@ require('../core/core.php');
  * return jsonFlux of the result;
  */
 
-function getHistoricalDay($fsym, $tsym, $iLimit = 100) {
+function getHistoricalDay($fsym, $tsym, $iLimit = 300) {
     $sUrl = 'https://min-api.cryptocompare.com/data/histoday?fsym=' . $fsym . '&tsym=' . $tsym . '&limit=' . $iLimit;
     return buildCurl($sUrl);
 }

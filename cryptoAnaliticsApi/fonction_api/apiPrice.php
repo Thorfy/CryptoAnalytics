@@ -14,7 +14,6 @@ if ($_GET['function']) {
 	}else{
 		$tsyms = ["USD"];
 	}
-	echo var_export($fsyms."-".$tsyms,true);
 	echo $function($fsyms, $tsyms);
 }
 /*

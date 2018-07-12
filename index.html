@@ -3,7 +3,7 @@
 <head>
     <title>CryptoAnalytics</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -63,7 +63,7 @@
                     <input type="text" class="form-control" placeholder="Crypto Monnaies" ng-model="searchInput">
                     <div class="dropdown-menu" ng-class="searchInput.length ? 'show' : ''">
                         <a class="dropdown-item" href="" ng-repeat="symbol in filteredSymbols = (symbols.symbol | filter:searchInput | limitTo:5) ">{{symbol}}</a>
-                        <a class="dropdown-item" ng-hide="filteredSymbols.length">Aucune monnaie trouvée.</a>
+                        <a class="dropdown-item" ng-hide="filteredSymbols.length">Aucune Crypto-monnaie trouvée.</a>
                     </div>
                 </div>
             </form>
