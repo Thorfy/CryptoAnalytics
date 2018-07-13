@@ -5,16 +5,43 @@ app.config(function($routeProvider){
     .when('/', {templateUrl:'app/inc/views/home.html'})
     .when('/currencies', {templateUrl:'app/inc/views/currencies.html', controller:'currenciesCtrl'})
     .when('/currencies/:symbol', {templateUrl:'app/inc/views/currency.html', controller:'currencyCtrl'})
+    .when('/monCompte', {templateUrl:'app/inc/views/account.html', controller:'accountCtrl'})
     .otherwise({redirectTo:'/'})
 
 })
+/* MOCKUP ------------------------TO DO, TO FINISH, TO UNIT TESTING ---------------------------MOCKUP*/
+app.factory('GetUserConnection', function($http,$q){
+    var userConnection  = {
+        isConnected:false,
+        test: function(){
+            userConnection.isConnected = true
+        },
+        connectMe: function($nigol,$pdm){
+            var deferred = $q.defer()
+            $http.get("URL DE TEST ").success(function(data,status){
+                if(data.success === true){
+                    userConnection.isConnected = true
+                }else{
+                    isConnected = false
+                }
+                deferred.resolve(data.Data)
+            }).error(function(data,status){
+                userConnection.isConnected = false
+                deferred.reject("pas de connection")
+            })
+            return deferred.promise
+        }
 
+    }
+    return userConnection
+
+})
 
 app.factory('GetApiInfo', function($http, $q){
-    var deferred = $q.defer()
+
     var apiInfo = {
         getFullData: function(fsyms, tsyms){
-
+            var deferred = $q.defer()
             $http.get("cryptoAnaliticsApi/fonction_api/apiPrice.php/?function=getPriceMultiFull&fsyms="+fsyms.toString()+"&tsyms="+tsyms.toString()).success(function(data, status){
                 deferred.resolve(data)
             }).error(function(data, status){
@@ -23,8 +50,17 @@ app.factory('GetApiInfo', function($http, $q){
             return deferred.promise
         },
         getSymbol: function(){
-
+            var deferred = $q.defer()
             $http.get("app/inc/json/staticSearch.json").success(function(data, status){
+                deferred.resolve(data)
+            }).error(function(data, status){
+                deferred.reject('pas de connection')
+            })
+            return deferred.promise
+        },
+        getHistoricalDay: function(fsyms,tsyms){
+            var deferred = $q.defer()
+            $http.get("cryptoAnaliticsApi/fonction_api/apiHistorical.php/?function=getHistoricalDay&fsyms="+fsyms.toString()+"&tsyms="+tsyms.toString()).success(function(data, status){
                 deferred.resolve(data)
             }).error(function(data, status){
                 deferred.reject('pas de connection')
@@ -36,16 +72,25 @@ app.factory('GetApiInfo', function($http, $q){
 
 })
 
+
+
 app.controller('currenciesCtrl', function($scope, GetApiInfo){
     $scope.currencies = GetApiInfo.getSymbol().then(function(response){
-      $scope.currencies = response
-  },function(error){
-    $scope.currencies = error
+        $scope.currencies = response
+    },function(error){
+        $scope.currencies = error
+    })
 })
+
+app.controller('connectionInscriptionCtrl', function($scope,$rootScope, GetUserConnection){
+    console.log($rootScope)
+})
+
+app.controller('accountCtrl',function($scope,GetUserConnection){
+    
 })
 
 app.controller('currencyCtrl', function($scope, $routeParams, GetApiInfo){
-    console.log($routeParams.symbol)
     $scope.currencyData = GetApiInfo.getFullData($routeParams.symbol,["USD"]).then(function(response){
         $scope.currencyData = response
     },function(error){
@@ -54,69 +99,31 @@ app.controller('currencyCtrl', function($scope, $routeParams, GetApiInfo){
 })
 
 
-app.controller('searchCtrl', function ($scope, GetApiInfo){
+app.controller('searchCtrl', function ($scope, GetApiInfo, GetUserConnection){
+    console.log("searchCtrl ---- ")
+    console.log(GetUserConnection)
     $scope.symbols = GetApiInfo.getSymbol().then(function(response){
-        console.log(response)
         $scope.symbols = response
     },function(error){
         $scope.symbols = error
     })
 })
 
-app.controller("statBarCtrl",function ($scope){
-	$scope.currencies = [
-    {
-        name:'BTC',
-        title:'Bitcoin',
-        price: 6567.44,
-        sign:'$',
-        classInfo:'secondary',
-        percent:1.85,
-        chevron: "bottom"
-    },{
-        name:'ETH',
-        title:'Etherum',
-        price: 465.70,
-        sign:'$',
-        classInfo:'secondary',
-        percent:2.46,
-        chevron: "bottom"
-    },{
-        name:'LTC',
-        title:'LiteCoin',
-        price: 82.18,
-        sign:'$',
-        classInfo:'danger',
-        percent:3.21,
-        chevron: "bottom"
-    },{
-        name:'EOS',
-        title:'EOS',
-        price: 8.51,
-        sign:'$',
-        classInfo:'danger',
-        percent:5.17,
-        chevron: "bottom"
-    },{
-        name:'XRP',
-        title:'XRP',
-        price: 0.466003,
-        sign:'$',
-        classInfo:'danger',
-        percent:4.97,
-        chevron: "bottom"
-    },{
-        name:'BCH',
-        title:'BitcoinCash',
-        price: 723.66,
-        sign:'$',
-        classInfo:'danger',
-        percent:5.17,
-        chevron: "bottom"
-    }];
+app.controller("statBarCtrl",function ($scope, GetApiInfo){
+
+    $scope.defaultCrypto = ['BTC','LTC','ETH','EOS','XRP','BCH']
+    $scope.defaultVal = ['USD']
+
+    $scope.currencies = GetApiInfo.getFullData($scope.defaultCrypto,$scope.defaultVal).then(function(response){
+        $scope.currencies = response
+    },function(error){
+        $scope.currencies = error
+    })
+
+
 });
-app.controller("statPannelChartCtrl",function ($scope){
-	$.getJSON('cryptoAnaliticsApi/inc/getHistorical.inc.php/?function=getHistoricalDay', function (response) {
+app.controller("statPannelChartCtrl",function ($scope, GetApiInfo){
+	GetApiInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
         var ohlc = [];
         for(var i = 0; i<response.Data.length; i++){
             var stockObject = response.Data[i];

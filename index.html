@@ -15,6 +15,11 @@
         height: 140px;
         margin-top: 15px;
     }
+    .dropdown-menu-right{
+        right:0;
+        left:auto;
+    }
+    
 </style>
 </head>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -47,7 +52,7 @@
                     <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Mon Compte
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" ng-controller="connectionInscriptionCtrl">
                         <a class="dropdown-item" href="">Se connecter</a>
                         <a class="dropdown-item" href="">Se déconnecter</a>
                         <div class="dropdown-divider"></div>
@@ -61,7 +66,7 @@
             <form class="form-inline" ng-controller="searchCtrl">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Crypto Monnaies" ng-model="searchInput">
-                    <div class="dropdown-menu" ng-class="searchInput.length ? 'show' : ''">
+                    <div class="dropdown-menu dropdown-menu-right" ng-class="searchInput.length ? 'show' : ''">
                         <a class="dropdown-item" href="" ng-repeat="symbol in filteredSymbols = (symbols.symbol | filter:searchInput | limitTo:5) ">{{symbol}}</a>
                         <a class="dropdown-item" ng-hide="filteredSymbols.length">Aucune Crypto-monnaie trouvée.</a>
                     </div>
