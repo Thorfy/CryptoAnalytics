@@ -5,7 +5,7 @@ app.config(function($routeProvider){
     .when('/', {templateUrl:'app/inc/views/home.html'})
     .when('/currencies', {templateUrl:'app/inc/views/currencies.html', controller:'currenciesCtrl'})
     .when('/currencies/:symbol', {templateUrl:'app/inc/views/currency.html', controller:'currencyCtrl'})
-    .when('/monCompte', {templateUrl:'app/inc/views/account.html', controller:'accountCtrl'})
+    .when('/account', {templateUrl:'app/inc/views/account.html', controller:'accountCtrl'})
     .otherwise({redirectTo:'/'})
 
 })
