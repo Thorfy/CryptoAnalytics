@@ -83,11 +83,16 @@ app.controller('currenciesCtrl', function($scope, GetApiInfo){
 })
 
 app.controller('connectionInscriptionCtrl', function($scope,$rootScope, GetUserConnection){
-    console.log($rootScope)
+    $scope.symbols = GetApiInfo.getSymbol().then(function(response){
+        $scope.symbols = response
+    },function(error){
+        $scope.symbols = error
+    })
 })
 
-app.controller('accountCtrl',function($scope,GetUserConnection){
-    
+app.controller('accountCtrl',function($scope,GetUserConnection, GetApiInfo){
+    GetApiInfo
+
 })
 
 app.controller('currencyCtrl', function($scope, $routeParams, GetApiInfo){
