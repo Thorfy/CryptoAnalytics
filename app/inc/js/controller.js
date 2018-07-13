@@ -82,17 +82,16 @@ app.controller('currenciesCtrl', function($scope, GetApiInfo){
     })
 })
 
-app.controller('connectionInscriptionCtrl', function($scope,$rootScope, GetUserConnection){
+app.controller('connectionInscriptionCtrl', function($scope){
+
+})
+
+app.controller('accountCtrl',function($scope,GetUserConnection, GetApiInfo){
     $scope.symbols = GetApiInfo.getSymbol().then(function(response){
         $scope.symbols = response
     },function(error){
         $scope.symbols = error
     })
-})
-
-app.controller('accountCtrl',function($scope,GetUserConnection, GetApiInfo){
-    GetApiInfo
-
 })
 
 app.controller('currencyCtrl', function($scope, $routeParams, GetApiInfo){
@@ -105,8 +104,6 @@ app.controller('currencyCtrl', function($scope, $routeParams, GetApiInfo){
 
 
 app.controller('searchCtrl', function ($scope, GetApiInfo, GetUserConnection){
-    console.log("searchCtrl ---- ")
-    console.log(GetUserConnection)
     $scope.symbols = GetApiInfo.getSymbol().then(function(response){
         $scope.symbols = response
     },function(error){
@@ -115,15 +112,21 @@ app.controller('searchCtrl', function ($scope, GetApiInfo, GetUserConnection){
 })
 
 app.controller("statBarCtrl",function ($scope, GetApiInfo){
-
+    var flagFullData = false 
+    var fullData = ""
     $scope.defaultCrypto = ['BTC','LTC','ETH','EOS','XRP','BCH']
     $scope.defaultVal = ['USD']
-
-    $scope.currencies = GetApiInfo.getFullData($scope.defaultCrypto,$scope.defaultVal).then(function(response){
-        $scope.currencies = response
-    },function(error){
-        $scope.currencies = error
-    })
+    if(flagFullData === false){
+        $scope.currencies = GetApiInfo.getFullData($scope.defaultCrypto,$scope.defaultVal).then(function(response){
+            $scope.currencies = response
+            fullData = response
+            flagFullData = true
+        },function(error){
+            $scope.currencies = error
+        })
+    }else{
+        $scope.currencies = fullData 
+    }
 
 
 });
