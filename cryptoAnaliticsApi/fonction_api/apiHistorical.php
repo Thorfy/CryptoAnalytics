@@ -1,5 +1,4 @@
 <?php
-
 require('../core/core.php');
 if ($_GET['function']) {
 	$function = $_GET['function'];

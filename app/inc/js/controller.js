@@ -9,138 +9,78 @@ app.config(function($routeProvider){
     .otherwise({redirectTo:'/'})
 
 })
-/* MOCKUP ------------------------TO DO, TO FINISH, TO UNIT TESTING ---------------------------MOCKUP*/
-app.factory('GetUserConnection', function($http,$q){
-    var userConnection  = {
-        isConnected:false,
-        test: function(){
-            userConnection.isConnected = true
-        },
-        connectMe: function($nigol,$pdm){
-            var deferred = $q.defer()
-            $http.get("URL DE TEST ").success(function(data,status){
-                if(data.success === true){
-                    userConnection.isConnected = true
-                }else{
-                    isConnected = false
-                }
-                deferred.resolve(data.Data)
-            }).error(function(data,status){
-                userConnection.isConnected = false
-                deferred.reject("pas de connection")
-            })
-            return deferred.promise
-        }
 
+app.controller('currenciesCtrl', function($scope, ApiCurrencies){
+    if(ApiCurrencies.flag === true){
+        $scope.currencies = ApiCurrencies.getCurrency()
+    }else{
+        $scope.currencies = ApiCurrencies.setCurrency().then(function(response){
+            $scope.currencies = response
+        })
     }
-    return userConnection
-
 })
 
-app.factory('GetApiInfo', function($http, $q){
+app.controller('connectionInscriptionCtrl', function($scope, GetUserConnection){
+    $scope.info = GetUserConnection.testConnect().then(function(response){
+        console.log(GetUserConnection)
+        $scope.info = response
+    },function(error){
+        console.log(GetUserConnection)
+        $scope.info = error
+    })
+})
 
-    var apiInfo = {
-        getFullData: function(fsyms, tsyms){
-            var deferred = $q.defer()
-            $http.get("cryptoAnaliticsApi/fonction_api/apiPrice.php/?function=getPriceMultiFull&fsyms="+fsyms.toString()+"&tsyms="+tsyms.toString()).success(function(data, status){
-                deferred.resolve(data)
-            }).error(function(data, status){
-                deferred.reject('pas de connection')
-            })
-            return deferred.promise
-        },
-        getSymbol: function(){
-            var deferred = $q.defer()
-            $http.get("app/inc/json/staticSearch.json").success(function(data, status){
-                deferred.resolve(data)
-            }).error(function(data, status){
-                deferred.reject('pas de connection')
-            })
-            return deferred.promise
-        },
-        getHistoricalDay: function(fsyms,tsyms){
-            var deferred = $q.defer()
-            $http.get("cryptoAnaliticsApi/fonction_api/apiHistorical.php/?function=getHistoricalDay&fsyms="+fsyms.toString()+"&tsyms="+tsyms.toString()).success(function(data, status){
-                deferred.resolve(data)
-            }).error(function(data, status){
-                deferred.reject('pas de connection')
-            })
-            return deferred.promise
-        }
+app.controller('accountCtrl',function($scope,GetUserConnection, ApiCurrencies){
+    if(ApiCurrencies.flag === true){
+        $scope.symbols = ApiCurrencies.getCurrency()
+    }else{
+        $scope.symbols = ApiCurrencies.setCurrency().then(function(response){
+            $scope.symbols = response
+        })
     }
-    return apiInfo    
+})
 
+app.controller('currencyCtrl', function($scope, $routeParams){
+    // aller chercher les data pour 1 seule monnaie
 })
 
 
-
-app.controller('currenciesCtrl', function($scope, GetApiInfo){
-    $scope.currencies = GetApiInfo.getSymbol().then(function(response){
-        $scope.currencies = response
-    },function(error){
-        $scope.currencies = error
-    })
+app.controller('searchCtrl', function ($scope, GetApiInfo, ApiCurrencies){
+    if(ApiCurrencies.flag === true){
+        $scope.Data = ApiCurrencies.getCurrency()
+    }else{
+        $scope.Data = ApiCurrencies.setCurrency().then(function(response){
+            $scope.Data = response
+        })
+    }
 })
 
-app.controller('connectionInscriptionCtrl', function($scope){
-
-})
-
-app.controller('accountCtrl',function($scope,GetUserConnection, GetApiInfo){
-    $scope.symbols = GetApiInfo.getSymbol().then(function(response){
-        $scope.symbols = response
-    },function(error){
-        $scope.symbols = error
-    })
-})
-
-app.controller('currencyCtrl', function($scope, $routeParams, GetApiInfo){
-    $scope.currencyData = GetApiInfo.getFullData($routeParams.symbol,["USD"]).then(function(response){
-        $scope.currencyData = response
-    },function(error){
-        $scope.currencyData = error
-    })
-})
-
-
-app.controller('searchCtrl', function ($scope, GetApiInfo, GetUserConnection){
-    $scope.symbols = GetApiInfo.getSymbol().then(function(response){
-        $scope.symbols = response
-    },function(error){
-        $scope.symbols = error
-    })
-})
-
-app.controller("statBarCtrl",function ($scope, GetApiInfo){
-    var flagFullData = false 
-    var fullData = ""
+app.controller("statBarCtrl",function ($scope, ApiFullData){
+    //data preference ou data by default
     $scope.defaultCrypto = ['BTC','LTC','ETH','EOS','XRP','BCH']
     $scope.defaultVal = ['USD']
-    if(flagFullData === false){
-        $scope.currencies = GetApiInfo.getFullData($scope.defaultCrypto,$scope.defaultVal).then(function(response){
-            $scope.currencies = response
-            fullData = response
-            flagFullData = true
-        },function(error){
-            $scope.currencies = error
-        })
+    if(ApiFullData.flag === true){
+        $scope.currencies = ApiFullData.getFullData()
     }else{
-        $scope.currencies = fullData 
+        $scope.currencies = ApiFullData.setFullData($scope.defaultCrypto,$scope.defaultVal).then(function(fullData){
+            $scope.currencies = fullData
+        },function(error){
+            $scope.Data = error
+        })
     }
+})
 
-
-});
 app.controller("statPannelChartCtrl",function ($scope, GetApiInfo){
-	GetApiInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
-        var ohlc = [];
-        for(var i = 0; i<response.Data.length; i++){
-            var stockObject = response.Data[i];
-            var outputOhlc = [
-            stockObject.time*1000,
-            stockObject.close,
-            stockObject.high,
-            stockObject.low,
-            stockObject.open
+ GetApiInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
+    var ohlc = [];
+    for(var i = 0; i<response.Data.length; i++){
+        var stockObject = response.Data[i];
+        var outputOhlc = [
+        stockObject.time*1000,
+        stockObject.close,
+        stockObject.high,
+        stockObject.low,
+        stockObject.open
         // stockObject.volumefrom,
         // stockObject.volumeto
         ]

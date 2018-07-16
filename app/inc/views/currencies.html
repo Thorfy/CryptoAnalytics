@@ -5,12 +5,14 @@
 		<thead class="thead-light">
 			<tr>
 				<th scope="col">Symbol</th>
+				<th scope="col">Nom</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="currency in currencies.symbol">
-				<td><a href="#/currencies/{{currency}}">{{currency}}</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+			<tr ng-repeat="currency in currencies">
+				<td><a href="#/currencies/{{currency.id_monnaie_crypto}}">{{currency.id_monnaie_crypto}}</td>
+					<td><a href="#/currencies/{{currency.id_monnaie_crypto}}">{{currency.nom_monnaie_crypto}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
