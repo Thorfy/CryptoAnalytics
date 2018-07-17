@@ -70,7 +70,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Crypto Monnaies" ng-model="searchInput">
                     <div class="dropdown-menu dropdown-menu-right" ng-class="searchInput.length ? 'show' : ''">
-                        <a class="dropdown-item" href="" ng-repeat="currency in filteredData = (Data | filter:searchInput | limitTo:5)">{{currency.id_monnaie_crypto}}, {{currency.nom_monnaie_crypto}}</a>
+                        <a class="dropdown-item" href="#/currencies/{{currency.id_monnaie_crypto}}" ng-repeat="currency in filteredData = (Data | filter:searchInput | limitTo:5)">{{currency.id_monnaie_crypto}}, {{currency.nom_monnaie_crypto}}</a>
                         <a class="dropdown-item" ng-hide="filteredData.length">Aucune Crypto-monnaie trouvée.</a>
                     </div>
                 </div>

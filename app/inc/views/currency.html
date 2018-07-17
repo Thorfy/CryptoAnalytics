@@ -4,14 +4,14 @@
 		<h1>{{name}}</h1>
 	</div>
 	<div class="card-deck">
-		<div class="col-lg-4 col-md-4 col-sm-6 col-11">
+		<div class="col-lg-4 col-md-5 col-sm-6 col-12">
 			<div class="container">
 				<img class="card-img-top" src="app/inc/img/{{symbol}}.png">
 			<!--	<button type="button" class="btn btn-block btn-success col-12">Ajouter à mes préférences</button>
 				<button type="button" class="btn btn-block btn-info col-12">Voir le graphique</button>-->
 			</div>
 		</div>
-		<div class="col-lg-8 col-md-8 col-sm-6 col-12">
+		<div class="col-lg-8 col-md-12 col-sm-12 col-12">
 			<div class="container">
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item">
@@ -21,28 +21,28 @@
 					<li class="list-group-item">
 
 						<div class="row">
-							<div class="col">
+							<div class="col-12 col-sm-6">
 								<span class="form-text text-muted">Mkt. Cap. </span>
 								<h4>{{currency[symbol][tradiCurrency].MKTCAP}}</h4>
 							</div>
-							<div class="col">
+							<div class="col-12 col-sm-6">
 								<span class="form-text text-muted">Vol. 24H</span>
-								<h4>{{currency[symbol][tradiCurrency].VOLUME24HOUR}}</h4>
+								<h4>{{currency[symbol][tradiCurrency].TOTALVOLUME24H}} / {{currency[symbol][tradiCurrency].TOTALVOLUME24HTO}}</h4>
 							</div>
-							<div class="col"></div>
+							<div class="col-12 col-sm-6"></div>
 						</div>
 					</li>
 					<li class="list-group-item">
 						<div class="row">
-							<div class="col">
+							<div class="col-12 col-sm-6">
 								<span class="form-text text-muted">Open 24H</span>
 								<p><strong>{{currency[symbol][tradiCurrency].OPEN24HOUR}}</strong></p>
 							</div>
-							<div class="col">
+							<div class="col-12 col-sm-6">
 								<span class="form-text text-muted">Low/Hight 24H</span>
 								<p><strong>{{currency[symbol][tradiCurrency].LOW24HOUR}} - {{currency[symbol][tradiCurrency].HIGH24HOUR}}</strong></p>
 							</div>
-							<div class="col">
+							<div class="col-12 col-sm-6">
 								<span class="form-text text-muted">Last Trade</span>
 								<p><strong>{{currency[symbol][tradiCurrency].LASTVOLUME}}({{currency[symbol][tradiCurrency].LASTVOLUMETO}})/{{currency[symbol][tradiCurrency].LASTMARKET}}</strong></p>
 							</div>
@@ -57,34 +57,31 @@
 				<table class="table">
 					<thead class="thead-light">
 						<tr>
-							<th scope="col">#</th>
-							<th scope="col">First</th>
-							<th scope="col">Last</th>
-							<th scope="col">Handle</th>
+							<th scope="col">Symbol</th>
+							<th scope="col">Crypto</th>
+							<th scope="col">Supply</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<th scope="row">1</th>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
+							<td>{{symbol}}</td>
+							<td>{{name}}</td>
+							<td>{{currency[symbol][tradiCurrency].SUPPLY}}</td>
+							
 						</tr>
 					</tbody>
 					<thead class="thead-light">
 						<tr>
-							<th scope="col">#</th>
-							<th scope="col">First</th>
-							<th scope="col">Last</th>
-							<th scope="col">Handle</th>
+							<th scope="col">OpenDay</th>
+							<th scope="col">LowDay</th>
+							<th scope="col">HighDay</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<th scope="row">1</th>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
+							<td>{{currency[symbol][tradiCurrency].OPENDAY}}</td>
+							<td>{{currency[symbol][tradiCurrency].LOWDAY}}</td>
+							<td>{{currency[symbol][tradiCurrency].HIGHDAY}}</td>
 						</tr>
 					</tbody>
 				</table>

@@ -37,6 +37,7 @@ app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistor
     $scope.tradiCurrency = 'USD'
     $scope.symbol = $routeParams.symbol
     $scope.currency = ApiInfo.getFullData([$scope.symbol]).then(function(success){
+        console.log(success)
         $scope.currency = success
     },function(error){
         $scope.currency = error
