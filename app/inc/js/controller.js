@@ -10,68 +10,70 @@ app.config(function($routeProvider){
 
 })
 
-app.controller('currenciesCtrl', function($scope, ApiCurrencies){
-    if(ApiCurrencies.flag === true){
-        $scope.currencies = ApiCurrencies.getCurrency()
-    }else{
-        $scope.currencies = ApiCurrencies.setCurrency().then(function(response){
-            $scope.currencies = response
-        })
-    }
+app.controller('currenciesCtrl', function($scope, ApiInfo){
+
+    $scope.currencies = ApiInfo.getCryptoCurrency().then(function(response){
+        $scope.currencies = response
+    })
+
 })
 
-app.controller('connectionInscriptionCtrl', function($scope, GetUserConnection){
-    $scope.info = GetUserConnection.testConnect().then(function(response){
-        console.log(GetUserConnection)
-        $scope.info = response
+app.controller('connectionInscriptionCtrl', function($scope){
+    //TO DO GESTION CONNECTION
+})
+
+app.controller('accountCtrl',function($scope){
+    //TO DO GESTION DES PREFERENCES
+})
+
+app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo){
+    $scope.name = ApiInfo.getCryptoCurrency().then(function(response){
+        var output = []
+        response.map(currency =>{
+            output[currency.id_monnaie_crypto] = currency.nom_monnaie_crypto
+        })
+        $scope.name = output[$routeParams.symbol]
+    })
+    $scope.tradiCurrency = 'USD'
+    $scope.symbol = $routeParams.symbol
+    $scope.currency = ApiInfo.getFullData([$scope.symbol]).then(function(success){
+        $scope.currency = success
     },function(error){
-        console.log(GetUserConnection)
-        $scope.info = error
+        $scope.currency = error
     })
 })
 
-app.controller('accountCtrl',function($scope,GetUserConnection, ApiCurrencies){
-    if(ApiCurrencies.flag === true){
-        $scope.symbols = ApiCurrencies.getCurrency()
-    }else{
-        $scope.symbols = ApiCurrencies.setCurrency().then(function(response){
-            $scope.symbols = response
-        })
-    }
+
+app.controller('searchCtrl', function ($scope, ApiInfo){
+    $scope.Data = ApiInfo.getCryptoCurrency().then(function(success){
+        $scope.Data = success
+    }, function(error){
+        $scope.Data = error
+    })
 })
 
-app.controller('currencyCtrl', function($scope, $routeParams){
-    // aller chercher les data pour 1 seule monnaie
-})
-
-
-app.controller('searchCtrl', function ($scope, GetApiInfo, ApiCurrencies){
-    if(ApiCurrencies.flag === true){
-        $scope.Data = ApiCurrencies.getCurrency()
-    }else{
-        $scope.Data = ApiCurrencies.setCurrency().then(function(response){
-            $scope.Data = response
-        })
-    }
-})
-
-app.controller("statBarCtrl",function ($scope, ApiFullData){
+app.controller("statBarCtrl",function ($scope, ApiInfo){
     //data preference ou data by default
-    $scope.defaultCrypto = ['BTC','LTC','ETH','EOS','XRP','BCH']
-    $scope.defaultVal = ['USD']
-    if(ApiFullData.flag === true){
-        $scope.currencies = ApiFullData.getFullData()
-    }else{
-        $scope.currencies = ApiFullData.setFullData($scope.defaultCrypto,$scope.defaultVal).then(function(fullData){
-            $scope.currencies = fullData
-        },function(error){
-            $scope.Data = error
+    $scope.prefCryptoVal = ['BTC','LTC','ETH','EOS','XRP','BCH']
+    $scope.prefTradiVal = ['USD']
+
+    $scope.name = ApiInfo.getCryptoCurrency().then(function(response){
+        var output = []
+        response.map(currency =>{
+            output[currency.id_monnaie_crypto] = currency.nom_monnaie_crypto
         })
-    }
+        $scope.name = output
+    })
+
+    $scope.currencies = ApiInfo.getFullData($scope.prefCryptoVal).then(function(success){
+        $scope.currencies = success
+    },function(error){
+        $scope.currencies = error
+    })
 })
 
-app.controller("statPannelChartCtrl",function ($scope, GetApiInfo){
- GetApiInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
+app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
+   GetHistoricalInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
     var ohlc = [];
     for(var i = 0; i<response.Data.length; i++){
         var stockObject = response.Data[i];

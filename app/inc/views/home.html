@@ -1,11 +1,11 @@
 <div class="container">
 	<div id="statBar" class="row" ng-controller="statBarCtrl">
-		<div class="col-md" ng-repeat="(index, currency) in currencies">
-			<div class="card border-{{currency[defaultVal].classInfo}} mb-3 statTopCard">
-				<div class="card-body text-center text-{{currency.classInfo}} ">
-					<h5 class="card-title">{{index}}</h5>
-					<p class="card-text">{{currency[defaultVal].PRICE}}</p>
-					<p class="card-text"><span class="oi oi-chevron-{{currency.chevron}}"></span> {{currency[defaultVal].CHANGEPCTDAY}}%</p>
+		<div class="col-md" ng-repeat="(indexCurrency, objectCurrency) in currencies">
+			<div class="card mb-3 statTopCard"  ng-class="objectCurrency[prefTradiVal].CHANGEPCT24HOUR.includes('-') ? 'border-danger' : 'border-success'">
+				<div class="card-body text-center text-" ng-class="objectCurrency[prefTradiVal].CHANGEPCT24HOUR.includes('-') ? ' text-danger' : ' text-success'">
+					<h5 class="card-title">{{name[indexCurrency]}}</h5>
+					<p class="card-text">{{objectCurrency[prefTradiVal].PRICE}}</p>
+					<p class="card-text"><span class="oi" ng-class="objectCurrency[prefTradiVal].CHANGEPCT24HOUR.includes('-') ? 'oi-chevron-bottom' : 'oi-chevron-top'"></span> {{objectCurrency[prefTradiVal].CHANGEPCT24HOUR}}%</p>
 				</div>
 			</div> 
 		</div>

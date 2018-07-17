@@ -1,12 +1,12 @@
 <br>
-	<div class="card border-dark">
-		<div class="card-header text-dark">
-			<h1>BitCoin</h1>
-		</div>
-		<div class="card-deck">
-			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
-				<div class="container">
-					<img class="card-img-top" src="app/inc/img/bitcoin.png">
+<div class="card border-dark">
+	<div class="card-header text-dark">
+		<h1>{{name}}</h1>
+	</div>
+	<div class="card-deck">
+		<div class="col-lg-4 col-md-4 col-sm-12 col-12">
+			<div class="container">
+				<img class="card-img-top" src="app/inc/img/{{symbol}}.png">
 			<!--	<button type="button" class="btn btn-block btn-success col-12">Ajouter à mes préférences</button>
 				<button type="button" class="btn btn-block btn-info col-12">Voir le graphique</button>-->
 			</div>
@@ -14,17 +14,20 @@
 		<div class="col-lg-8 col-md-8 col-sm-12 col-12">
 			<div class="container">
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><h1 class="text-success">6,591 € <span class="oi oi-chevron-top"></span></h1></li>
+					<li class="list-group-item">
+						<h1 class="" ng-class="currency[symbol][tradiCurrency].CHANGEPCT24HOUR.includes('-') ? 'text-danger' : 'text-success'">{{currency[symbol][tradiCurrency].PRICE}} <span class="oi" ng-class="currency[symbol][tradiCurrency].CHANGEPCT24HOUR.includes('-') ? 'oi-chevron-bottom' : 'oi-chevron-top'"></span>
+						</h1><p ng-class="currency[symbol][tradiCurrency].CHANGEPCT24HOUR.includes('-') ? 'text-danger' : 'text-success'"><strong>{{currency[symbol][tradiCurrency].CHANGEPCT24HOUR}}%, {{currency[symbol][tradiCurrency].CHANGE24HOUR}} </strong></p>
+					</li>
 					<li class="list-group-item">
 
 						<div class="row">
 							<div class="col">
 								<span class="form-text text-muted">Mkt. Cap. </span>
-								<h2>14578</h2>
+								<h4>{{currency[symbol][tradiCurrency].MKTCAP}}</h4>
 							</div>
 							<div class="col">
 								<span class="form-text text-muted">Vol. 24H</span>
-								<h2>4785</h2>
+								<h4>{{currency[symbol][tradiCurrency].VOLUME24HOUR}}</h4>
 							</div>
 							<div class="col"></div>
 						</div>
@@ -33,15 +36,15 @@
 						<div class="row">
 							<div class="col">
 								<span class="form-text text-muted">Open 24H</span>
-								<h2>47875</h2>
+								<p><strong>{{currency[symbol][tradiCurrency].OPEN24HOUR}}</strong></p>
 							</div>
 							<div class="col">
 								<span class="form-text text-muted">Low/Hight 24H</span>
-								<h2>48965</h2>
+								<p><strong>{{currency[symbol][tradiCurrency].LOW24HOUR}} - {{currency[symbol][tradiCurrency].HIGH24HOUR}}</strong></p>
 							</div>
 							<div class="col">
 								<span class="form-text text-muted">Last Trade</span>
-								<h2>4785</h2>
+								<p><strong>{{currency[symbol][tradiCurrency].LASTVOLUME}}({{currency[symbol][tradiCurrency].LASTVOLUMETO}})/{{currency[symbol][tradiCurrency].LASTMARKET}}</strong></p>
 							</div>
 						</div>
 					</li>
@@ -52,7 +55,7 @@
 		<div class="col-lg-12">
 			<div class="container">
 				<table class="table">
-					<thead class="thead-dark">
+					<thead class="thead-light">
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">First</th>
@@ -67,17 +70,21 @@
 							<td>Otto</td>
 							<td>@mdo</td>
 						</tr>
+					</tbody>
+					<thead class="thead-light">
 						<tr>
-							<th scope="row">2</th>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@fat</td>
+							<th scope="col">#</th>
+							<th scope="col">First</th>
+							<th scope="col">Last</th>
+							<th scope="col">Handle</th>
 						</tr>
+					</thead>
+					<tbody>
 						<tr>
-							<th scope="row">3</th>
-							<td>Larry</td>
-							<td>the Bird</td>
-							<td>@twitter</td>
+							<th scope="row">1</th>
+							<td>Mark</td>
+							<td>Otto</td>
+							<td>@mdo</td>
 						</tr>
 					</tbody>
 				</table>
