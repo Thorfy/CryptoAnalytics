@@ -1,94 +1,94 @@
 <br>
-<div class="card border-dark">
+<div class="card border-primary">
 	<div class="card-header text-dark">
 		<h1>{{name}}</h1>
 	</div>
-	<div class="card-deck">
-		<div class="col-lg-4 col-md-5 col-sm-6 col-12">
-			<div class="container">
-				<img class="card-img-top img-thumbnail" src="app/inc/img/{{symbol}}.png">
-			<!--	<button type="button" class="btn btn-block btn-success col-12">Ajouter à mes préférences</button>
-				<button type="button" class="btn btn-block btn-info col-12">Voir le graphique</button>-->
+	<div class="card-body">
+		<div class="card-deck">
+			<div class="col-lg-4 col-md-5 col-sm-6 col-12">
+				<div class="container">
+					<img class="card-img-top img-thumbnail" src="app/inc/img/{{symbol}}.png">
+				</div>
 			</div>
-		</div>
-		<div class="col-lg-8 col-md-12 col-sm-12 col-12">
-			<div class="container">
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						<h1 class="" ng-class="currency[symbol][tradiCurrency].CHANGEPCT24HOUR.includes('-') ? 'text-danger' : 'text-success'">{{currency[symbol][tradiCurrency].PRICE}} <span class="oi" ng-class="currency[symbol][tradiCurrency].CHANGEPCT24HOUR.includes('-') ? 'oi-chevron-bottom' : 'oi-chevron-top'"></span>
-						</h1><p ng-class="currency[symbol][tradiCurrency].CHANGEPCT24HOUR.includes('-') ? 'text-danger' : 'text-success'"><strong>{{currency[symbol][tradiCurrency].CHANGEPCT24HOUR}}%, {{currency[symbol][tradiCurrency].CHANGE24HOUR}} </strong></p>
-					</li>
-					<li class="list-group-item">
+			<div class="col-lg-8 col-md-12 col-sm-12 col-12">
+				<div class="container">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<h1 class="" ng-class="currency[symbol][tradiCurrency].CHANGEPCT24HOUR.includes('-') ? 'text-danger' : 'text-success'">{{currency[symbol][tradiCurrency].PRICE}} <span class="oi" ng-class="currency[symbol][tradiCurrency].CHANGEPCT24HOUR.includes('-') ? 'oi-chevron-bottom' : 'oi-chevron-top'"></span>
+							</h1><p ng-class="currency[symbol][tradiCurrency].CHANGEPCT24HOUR.includes('-') ? 'text-danger' : 'text-success'"><strong>{{currency[symbol][tradiCurrency].CHANGEPCT24HOUR}}%, {{currency[symbol][tradiCurrency].CHANGE24HOUR}} </strong></p>
+						</li>
+						<li class="list-group-item">
 
-						<div class="row">
-							<div class="col-12 col-sm-6">
-								<span class="form-text text-muted">Mkt. Cap. </span>
-								<h4>{{currency[symbol][tradiCurrency].MKTCAP}}</h4>
+							<div class="row">
+								<div class="col-12 col-sm-6">
+									<span class="form-text text-muted">Mkt. Cap. </span>
+									<h4>{{currency[symbol][tradiCurrency].MKTCAP}}</h4>
+								</div>
+								<div class="col-12 col-sm-6">
+									<span class="form-text text-muted">Vol. 24H</span>
+									<h4>{{currency[symbol][tradiCurrency].TOTALVOLUME24H}} / {{currency[symbol][tradiCurrency].TOTALVOLUME24HTO}}</h4>
+								</div>
+								<div class="col-12 col-sm-6"></div>
 							</div>
-							<div class="col-12 col-sm-6">
-								<span class="form-text text-muted">Vol. 24H</span>
-								<h4>{{currency[symbol][tradiCurrency].TOTALVOLUME24H}} / {{currency[symbol][tradiCurrency].TOTALVOLUME24HTO}}</h4>
+						</li>
+						<li class="list-group-item">
+							<div class="row">
+								<div class="col-12 col-sm-6">
+									<span class="form-text text-muted">Open 24H</span>
+									<p><strong>{{currency[symbol][tradiCurrency].OPEN24HOUR}}</strong></p>
+								</div>
+								<div class="col-12 col-sm-6">
+									<span class="form-text text-muted">Low/Hight 24H</span>
+									<p><strong>{{currency[symbol][tradiCurrency].LOW24HOUR}} - {{currency[symbol][tradiCurrency].HIGH24HOUR}}</strong></p>
+								</div>
+								<div class="col-12 col-sm-6">
+									<span class="form-text text-muted">Last Trade</span>
+									<p><strong>{{currency[symbol][tradiCurrency].LASTVOLUME}}({{currency[symbol][tradiCurrency].LASTVOLUMETO}})/{{currency[symbol][tradiCurrency].LASTMARKET}}</strong></p>
+								</div>
 							</div>
-							<div class="col-12 col-sm-6"></div>
-						</div>
-					</li>
-					<li class="list-group-item">
-						<div class="row">
-							<div class="col-12 col-sm-6">
-								<span class="form-text text-muted">Open 24H</span>
-								<p><strong>{{currency[symbol][tradiCurrency].OPEN24HOUR}}</strong></p>
-							</div>
-							<div class="col-12 col-sm-6">
-								<span class="form-text text-muted">Low/Hight 24H</span>
-								<p><strong>{{currency[symbol][tradiCurrency].LOW24HOUR}} - {{currency[symbol][tradiCurrency].HIGH24HOUR}}</strong></p>
-							</div>
-							<div class="col-12 col-sm-6">
-								<span class="form-text text-muted">Last Trade</span>
-								<p><strong>{{currency[symbol][tradiCurrency].LASTVOLUME}}({{currency[symbol][tradiCurrency].LASTVOLUMETO}})/{{currency[symbol][tradiCurrency].LASTMARKET}}</strong></p>
-							</div>
-						</div>
-					</li>
-				</ul> 
+						</li>
+					</ul> 
+				</div>
 			</div>
-		</div>
-		<hr>
-		<div class="col-md-4">
-			<div class="container table-responsive">
-				<table class="table">
-					<thead class="thead-light">
-						<tr>
-							<th scope="col">Symbol</th>
-							<th scope="col">Crypto</th>
-							<th scope="col">Supply</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>{{symbol}}</td>
-							<td>{{name}}</td>
-							<td>{{currency[symbol][tradiCurrency].SUPPLY}}</td>
-							
-						</tr>
-					</tbody>
-					<thead class="thead-light">
-						<tr>
-							<th scope="col">OpenDay</th>
-							<th scope="col">LowDay</th>
-							<th scope="col">HighDay</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>{{currency[symbol][tradiCurrency].OPENDAY}}</td>
-							<td>{{currency[symbol][tradiCurrency].LOWDAY}}</td>
-							<td>{{currency[symbol][tradiCurrency].HIGHDAY}}</td>
-						</tr>
-					</tbody>
-				</table>
+			<hr>
+			<div class="col-md-4">
+				<div class="container table-responsive">
+					<table class="table">
+						<thead class="thead-light">
+							<tr>
+								<th scope="col">Symbol</th>
+								<th scope="col">Crypto</th>
+								<th scope="col">Supply</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{symbol}}</td>
+								<td>{{name}}</td>
+								<td>{{currency[symbol][tradiCurrency].SUPPLY}}</td>
+
+							</tr>
+						</tbody>
+						<thead class="thead-light">
+							<tr>
+								<th scope="col">OpenDay</th>
+								<th scope="col">LowDay</th>
+								<th scope="col">HighDay</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{currency[symbol][tradiCurrency].OPENDAY}}</td>
+								<td>{{currency[symbol][tradiCurrency].LOWDAY}}</td>
+								<td>{{currency[symbol][tradiCurrency].HIGHDAY}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
-		<div class="col-md-8">
-			<div id="{{symbol}}" class="container"></div>
+			<div class="col-md-8">
+				<div id="{{symbol}}" class="container"></div>
+			</div>
 		</div>
 	</div>
 </div>
