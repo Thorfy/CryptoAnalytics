@@ -26,7 +26,7 @@ app.controller('accountCtrl',function($scope){
     //TO DO GESTION DES PREFERENCES
 })
 
-app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo){
+app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistoricalInfo){
     $scope.name = ApiInfo.getCryptoCurrency().then(function(response){
         var output = []
         response.map(currency =>{
@@ -41,6 +41,57 @@ app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo){
     },function(error){
         $scope.currency = error
     })
+
+    GetHistoricalInfo.getHistoricalDay([$routeParams.symbol],["USD"]).then(function(response){
+        var ohlc = [];
+        for(var i = 0; i<response.Data.length; i++){
+            var stockObject = response.Data[i];
+            var outputOhlc = [
+            stockObject.time*1000,
+            stockObject.close,
+            stockObject.high,
+            stockObject.low,
+            stockObject.open
+        // stockObject.volumefrom,
+        // stockObject.volumeto
+        ]
+        ohlc.push(outputOhlc);
+    }
+
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+
+     // create the chart
+     Highcharts.stockChart($routeParams.symbol, {
+
+        plotOptions: {
+            candlestick: {
+                color: '#28a745',
+                upColor: '#dc3545'
+            }
+        },
+
+        rangeSelector: {
+            selected: 1
+        },
+
+        title: {
+            text: $routeParams.symbol
+        },
+
+        series: [{
+            type: 'candlestick',
+            name: $routeParams.symbol,
+            data: ohlc,
+        }]
+    })
+ })
+
+
+
 })
 
 
@@ -73,53 +124,53 @@ app.controller("statBarCtrl",function ($scope, ApiInfo){
 })
 
 app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
-   GetHistoricalInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
-    var ohlc = [];
-    for(var i = 0; i<response.Data.length; i++){
-        var stockObject = response.Data[i];
-        var outputOhlc = [
-        stockObject.time*1000,
-        stockObject.close,
-        stockObject.high,
-        stockObject.low,
-        stockObject.open
-        // stockObject.volumefrom,
-        // stockObject.volumeto
-        ]
-        ohlc.push(outputOhlc);
-    }
-
-    Highcharts.setOptions({
-        global: {
-            useUTC: false
-        }
-    });
-
-     // create the chart
-     Highcharts.stockChart('container', {
-
-        plotOptions: {
-            candlestick: {
-                color: '#28a745',
-                upColor: '#dc3545'
+    GetHistoricalInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
+        var ohlc = [];
+        for(var i = 0; i<response.Data.length; i++){
+            var stockObject = response.Data[i];
+            var outputOhlc = [
+            stockObject.time*1000,
+            stockObject.close,
+            stockObject.high,
+            stockObject.low,
+            stockObject.open
+                // stockObject.volumefrom,
+                // stockObject.volumeto
+                ]
+                ohlc.push(outputOhlc);
             }
-        },
 
-        rangeSelector: {
-            selected: 1
-        },
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+            });
 
-        title: {
-            text: 'TEST2'
-        },
+        // create the chart
+        Highcharts.stockChart('container', {
 
-        series: [{
-            type: 'candlestick',
-            name: 'TEST',
-            data: ohlc,
-        }]
-    });
- });
-});
+            plotOptions: {
+                candlestick: {
+                    color: '#28a745',
+                    upColor: '#dc3545'
+                }
+            },
+
+            rangeSelector: {
+                selected: 1
+            },
+
+            title: {
+                text: 'TEST2'
+            },
+
+            series: [{
+                type: 'candlestick',
+                name: 'TEST',
+                data: ohlc,
+            }]
+        })
+    })
+})
 
 

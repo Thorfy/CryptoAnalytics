@@ -4,14 +4,14 @@
 		<h1>{{name}}</h1>
 	</div>
 	<div class="card-deck">
-		<div class="col-lg-4 col-md-4 col-sm-12 col-12">
+		<div class="col-lg-4 col-md-4 col-sm-6 col-11">
 			<div class="container">
 				<img class="card-img-top" src="app/inc/img/{{symbol}}.png">
 			<!--	<button type="button" class="btn btn-block btn-success col-12">Ajouter à mes préférences</button>
 				<button type="button" class="btn btn-block btn-info col-12">Voir le graphique</button>-->
 			</div>
 		</div>
-		<div class="col-lg-8 col-md-8 col-sm-12 col-12">
+		<div class="col-lg-8 col-md-8 col-sm-6 col-12">
 			<div class="container">
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item">
@@ -52,7 +52,7 @@
 			</div>
 		</div>
 		<hr>
-		<div class="col-lg-12">
+		<div class="col-md-4">
 			<div class="container">
 				<table class="table">
 					<thead class="thead-light">
@@ -89,6 +89,9 @@
 					</tbody>
 				</table>
 			</div>
+		</div>
+		<div class="col-md-8">
+			<div id="{{symbol}}" class="container"></div>
 		</div>
 	</div>
 </div>
