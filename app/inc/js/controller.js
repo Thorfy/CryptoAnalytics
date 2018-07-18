@@ -14,6 +14,8 @@ app.config(function($routeProvider){
 
 app.controller('currenciesCtrl', function($scope, ApiInfo){
 
+
+    $scope.tradiCurrency = 'USD'
     $scope.currencies = ApiInfo.getCryptoCurrency().then(function(response){
         $scope.currencies = response
         var output = []
@@ -22,7 +24,9 @@ app.controller('currenciesCtrl', function($scope, ApiInfo){
         })
         $scope.symbolArray = output
         $scope.infoCurrencies = ApiInfo.getFullData($scope.symbolArray).then(function(success){
+           
             $scope.infoCurrencies = success
+             console.log($scope.infoCurrencies)
         },function(error){
             $scope.infoCurrencies = error
         })

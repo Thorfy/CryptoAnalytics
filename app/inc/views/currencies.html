@@ -1,18 +1,28 @@
-<h1>currencies</h1>
+<h1>Crypto-Monnaies</h1>
 
 <div class="container">
-	<table class="table">
-		<thead class="thead-light">
-			<tr>
-				<th scope="col">Symbol</th>
-				<th scope="col">Nom</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="currency in currencies">
-				<td><a href="#/currencies/{{currency.id_monnaie_crypto}}">{{currency.id_monnaie_crypto}}</td>
-					<td><a href="#/currencies/{{currency.id_monnaie_crypto}}">{{currency.nom_monnaie_crypto}}</td>
+	<div class="table-responsive">
+		<table class="table">
+			<thead class="thead-light">
+				<tr>
+					<th scope="col">ico</th>
+					<th scope="col">Symbol/Nom</th>
+					<th scope="col">Price</th>
+					<th scope="col">PCT</th>
+					<th scope="col">MarketCap</th>
+					<th scope="col">Total volume/24h</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="currency in currencies">
+					<td><img src="app/inc/img/{{currency.id_monnaie_crypto}}.png" height="32" width="32"></td>
+					<td><a href="#/currencies/{{currency.id_monnaie_crypto}}">{{currency.id_monnaie_crypto}}/{{currency.nom_monnaie_crypto}}</td>
+						<td>{{infoCurrencies[currency.id_monnaie_crypto][tradiCurrency].PRICE}}</td>
+						<td>{{infoCurrencies[currency.id_monnaie_crypto][tradiCurrency].CHANGEPCT24HOUR}}%</td>
+						<td>{{infoCurrencies[currency.id_monnaie_crypto][tradiCurrency].MKTCAP}}</td>
+						<td>{{infoCurrencies[currency.id_monnaie_crypto][tradiCurrency].TOTALVOLUME24H}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+	</div>
