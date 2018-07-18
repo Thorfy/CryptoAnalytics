@@ -1,6 +1,6 @@
 <div class="container">
 	<div id="statBar" class="row" ng-controller="statBarCtrl">
-		<div class="col-md" ng-repeat="(indexCurrency, objectCurrency) in currencies">
+		<div class="col-md" ng-repeat="(indexCurrency, objectCurrency) in currencies" ng-cloak>
 			<div class="card mb-3 statTopCard"  ng-class="objectCurrency[prefTradiVal].CHANGEPCT24HOUR.includes('-') ? 'border-danger' : 'border-success'">
 				<div class="card-body text-center text-" ng-class="objectCurrency[prefTradiVal].CHANGEPCT24HOUR.includes('-') ? ' text-danger' : ' text-success'">
 					<h5 class="card-title">{{name[indexCurrency]}}</h5>

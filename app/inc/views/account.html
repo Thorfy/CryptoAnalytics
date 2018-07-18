@@ -1,76 +1,75 @@
 <p>// JUST NEED TO PROVIDE A "user" IN THE SCOPE LIKE : </p>
 <p><pre>
 	$scope.user = {
-		lastname: "string",
-		firstname: "string",
-		email: "string",
-		password: "string",
-		cryptos: ["string", "string"], (ex: ["BTC", "LTC"])
-		currency: "string", (ex: "EUR")
-	}
+	lastname: "string",
+	firstname: "string",
+	email: "string",
+	password: "string",
+	cryptos: ["string", "string"], (ex: ["BTC", "LTC"])
+	currency: "string", (ex: "EUR")
+}
 </pre></p>
-
-<h1>Mon compte</h1>
-
+<div class="container">
+	<h1>Mon compte</h1>
+</div>
 <div class="card-deck">
-	<div class="card col-lg-5"><div class="card-title text-center">
-	        <h2>Profil</h2>
-	    </div>
-		<hr class="">
-		<form class="form col-lg-12 card-body" ng-model="myAccountProfilForm">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="col-lg-12">
+	<div class="col-lg-6 col-12">
+		<div class="card">
+			<h2 class="card-header text-center">Profil</h2>
+			<form class="form col-lg-12 card-body" ng-model="myAccountProfilForm">
+				<div class="row form-group">
+					<div class="col-6">
 						<label class="form-label" for="lastname-user">Nom :</label>
 						<input type="text" id="lastname-user" ng-model="user.lastname" class="form-control" />
 					</div>
-					<div class="col-lg-12">
+					<div class="col-6">
 						<label class="form-label" for="firstname-user">Prénom :</label>
 						<input type="text" id="firstname-user" ng-model="user.firstname" class="form-control" />
 					</div>
 				</div>
-				<div class="col-lg-6">
-					<div class="col-lg-12">
+				<div class="row form-group">
+					<div class="col-6">
 						<label class="form-label" for="email-user">Email :</label>
 						<input type="text" id="email-user" ng-model="user.email" class="form-control" ng-readonly="true"/>
 					</div>
-					<div class="col-lg-12">
+					<div class="col-6">
 						<label class="form-label" for="password-user">Mot de passe :</label>
 						<input type="password" id="password-user" ng-model="user.password" class="form-control" />
 					</div>
 				</div>
-				<div class="col-lg-12">
-					<input type="submit" id="submit-user" value="Enregister" class="btn btn-block btn-primary" />
+				<div class="row">
+					<div class="col-12">
+						<input type="submit" id="submit-user" value="Enregister" class="btn btn-block btn-primary" />
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
+	<div class="col-12 col-lg-6">
+		<div class="card">
+			<h2 class="card-header text-center">Préférences</h2>
+			<form class="form col-12 card-body" ng-model="myAccountPreferencesForm">
+				<div class="row">
+					<div class="col-12">
+						<div class="col-12 form-group">
+							<label class="form-label" for="crypto-user">Monnaies préférées :</label>
+							<select multiple ng-model="user.cryptos" class="form-control" ng-options="s as s for s in symbols.symbol track by s" />
+						</div>
+						<div class="col-12 form-group">
+							<label class="form-label" for="currency-user">Currencies préférées :</label>
+							<select ng-model="user.currency" class="form-control">
+								<option value="USD">Dollars</option>
+								<option value="EUR">Euros</option>
+							</select>
+						</div>
 
-	<div class="card col-lg-5"><div class="card-title text-center">
-	        <h2>Préférences</h2>
-	    </div>
-		<hr class="">
-		<form class="form col-lg-12 card-body" ng-model="myAccountPreferencesForm">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="col-lg-12">
-						<label class="form-label" for="crypto-user">Monnaies préférées :</label>
-						<select multiple ng-model="user.cryptos" class="form-control" ng-options="s as s for s in symbols.symbol track by s" />
-					</div>
-					<div class="col-lg-12">
-						<label class="form-label" for="currency-user">Currencies préférées :</label>
-						<select ng-model="user.currency" class="form-control">
-							<option value="USD">Dollars</option>
-							<option value="EUR">Euros</option>
-						</select>
-					</div>
-
-					<div class="col-lg-12">
-						<input type="submit" id="submit-user-preferences" value="Enregister" class="btn btn-block btn-primary" />
+						<div class="col-12 form-group">
+							<input type="submit" id="submit-user-preferences" value="Enregister" class="btn btn-block btn-primary" />
+						</div>
 					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </div>
 
@@ -101,25 +100,25 @@ function multiple(selects) {
 
 
 <script> 
-$("select[multiple]").each(function(i, select) {
-	select.onclick = function(){multiple($(this));};
-});
- 
-function multiple(selects) {
-  if(typeof selects=="string") { selects = $(selects); }
-  var opts = [];
-  selects.each(function(i, el) {
-	  for(var i=0;i<el.options.length;i++) {
-	    opts.push(el.options[i].selected);
-	    el.options[i].onclick = (function(k) {
-	      return function() {
-	        opts[k] = !opts[k];
-	        for(var i=0;i<this.parentNode.options.length;i++) {
-	          this.parentNode.options[i].selected = opts[i];
-	        }
-	      };
-	    })(i);
-	  }
-	})
-}
+	$("select[multiple]").each(function(i, select) {
+		select.onclick = function(){multiple($(this));};
+	});
+
+	function multiple(selects) {
+		if(typeof selects=="string") { selects = $(selects); }
+		var opts = [];
+		selects.each(function(i, el) {
+			for(var i=0;i<el.options.length;i++) {
+				opts.push(el.options[i].selected);
+				el.options[i].onclick = (function(k) {
+					return function() {
+						opts[k] = !opts[k];
+						for(var i=0;i<this.parentNode.options.length;i++) {
+							this.parentNode.options[i].selected = opts[i];
+						}
+					};
+				})(i);
+			}
+		})
+	}
 </script>

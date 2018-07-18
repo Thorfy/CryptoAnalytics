@@ -88,7 +88,7 @@ app.factory('ApiInfo', function($http, $q){
                     for(let i = 0;i<success.length;i++){
                         allCryptoId.push(success[i].id_monnaie_crypto)
                     }
-                    apiInfo.setFullData(allCryptoId,["USD"]).then(function(success){
+                    apiInfo.setFullData(allCryptoId,["USD","EUR"]).then(function(success){
                         var toResolve = apiInfo.getFullData(cryptoArray).then(function(response){
                             deferred.resolve(response)
                         },function(error){

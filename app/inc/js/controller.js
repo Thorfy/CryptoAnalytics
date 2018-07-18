@@ -5,6 +5,8 @@ app.config(function($routeProvider){
     .when('/', {templateUrl:'app/inc/views/home.html'})
     .when('/currencies', {templateUrl:'app/inc/views/currencies.html', controller:'currenciesCtrl'})
     .when('/currencies/:symbol', {templateUrl:'app/inc/views/currency.html', controller:'currencyCtrl'})
+    .when('/connexion', {templateUrl:'app/inc/views/connexion.html'})
+    .when('/inscription', {templateUrl:'app/inc/views/inscription.html'})
     .when('/account', {templateUrl:'app/inc/views/account.html', controller:'accountCtrl'})
     .otherwise({redirectTo:'/'})
 
@@ -14,7 +16,20 @@ app.controller('currenciesCtrl', function($scope, ApiInfo){
 
     $scope.currencies = ApiInfo.getCryptoCurrency().then(function(response){
         $scope.currencies = response
+        var output = []
+        response.map(currency =>{
+            output.push(currency.id_monnaie_crypto)
+        })
+        $scope.symbolArray = output
+        $scope.infoCurrencies = ApiInfo.getFullData($scope.symbolArray).then(function(success){
+            $scope.infoCurrencies = success
+        },function(error){
+            $scope.infoCurrencies = error
+        })
     })
+
+
+
 
 })
 
@@ -37,7 +52,6 @@ app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistor
     $scope.tradiCurrency = 'USD'
     $scope.symbol = $routeParams.symbol
     $scope.currency = ApiInfo.getFullData([$scope.symbol]).then(function(success){
-        console.log(success)
         $scope.currency = success
     },function(error){
         $scope.currency = error
@@ -162,12 +176,12 @@ app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
             },
 
             title: {
-                text: 'TEST2'
+                text: 'BTC'
             },
 
             series: [{
                 type: 'candlestick',
-                name: 'TEST',
+                name: 'BTC',
                 data: ohlc,
             }]
         })
