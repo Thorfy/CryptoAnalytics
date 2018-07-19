@@ -1,8 +1,9 @@
 <div class="container">
 	<div id="statBar" class="row" ng-controller="statBarCtrl">
 		<div class="col-md" ng-repeat="(indexCurrency, objectCurrency) in currencies" ng-cloak>
-			<div class="card mb-3 statTopCard"  ng-class="objectCurrency[prefTradiVal].CHANGEPCT24HOUR.includes('-') ? 'border-danger' : 'border-success'">
-				<div class="card-body text-center text-" ng-class="objectCurrency[prefTradiVal].CHANGEPCT24HOUR.includes('-') ? ' text-danger' : ' text-success'">
+			<div class="card mb-3 statTopCard" ng-init="PCT = objectCurrency[prefTradiVal].CHANGEPCT24HOUR" ng-class="(PCT > (-3) && PCT < (3)) ? 'border-secondary ' : (PCT.includes('-') ? 'border-danger' : 'border-success')">
+				<!--			<div class="card mb-3 statTopCard"  ng-class="objectCurrency[prefTradiVal].CHANGEPCT24HOUR.includes('-') ? 'border-danger' : 'border-success'">-->
+				<div class="card-body text-center text-" ng-class="(PCT > (-3) && PCT < (3)) ? 'text-secondary ' : (PCT.includes('-') ? 'text-danger' : 'text-success')">
 					<h5 class="card-title">{{name[indexCurrency]}}</h5>
 					<p class="card-text">{{objectCurrency[prefTradiVal].PRICE}}</p>
 					<p class="card-text"><span class="oi" ng-class="objectCurrency[prefTradiVal].CHANGEPCT24HOUR.includes('-') ? 'oi-chevron-bottom' : 'oi-chevron-top'"></span> {{objectCurrency[prefTradiVal].CHANGEPCT24HOUR}}%</p>
