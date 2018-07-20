@@ -26,7 +26,6 @@ app.controller('currenciesCtrl', function($scope, ApiInfo){
         $scope.infoCurrencies = ApiInfo.getFullData($scope.symbolArray).then(function(success){
 
             $scope.infoCurrencies = success
-            console.log($scope.infoCurrencies)
         },function(error){
             $scope.infoCurrencies = error
         })
@@ -98,6 +97,12 @@ app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistor
                 selected: 1
             },
 
+            credits:{
+                enabled:true,
+                href:"#/",
+                text:"cryptoAnalytics"
+            },
+
             title: {
                 text: 'BTC'
             },
@@ -143,7 +148,8 @@ app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistor
                 series: {
                     dataGrouping: {
                         units: groupingUnits
-                    }
+                    },
+                    smoothed:true
                 }
             },
 
@@ -257,6 +263,12 @@ app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
                 text: 'BTC'
             },
 
+            credits:{
+                enabled:true,
+                href:"#/currencies/BTC",
+                text:"BTC - cryptoAnalytics"
+            },
+
             yAxis: [{
                 startOnTick: false,
                 endOnTick: false,
@@ -294,7 +306,8 @@ app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
                 series: {
                     dataGrouping: {
                         units: groupingUnits
-                    }
+                    },
+                    smoothed:true
                 }
             },
 

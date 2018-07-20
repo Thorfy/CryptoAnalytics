@@ -1,22 +1,24 @@
-<h1>Crypto-Monnaies</h1>
-
-<div class="container">
-	<div class="table-responsive">
-		<table class="table">
-			<thead class="thead-light">
-				<tr>
-					<th scope="col">ico</th>
-					<th scope="col">Symbol/Nom</th>
-					<th scope="col">Price</th>
-					<th scope="col">PCT</th>
-					<th scope="col">MarketCap</th>
-					<th scope="col">Total volume/24h</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="currency in currencies">
-					<td><img src="app/inc/img/{{currency.id_monnaie_crypto}}.png" height="32" width="32"></td>
-					<td><a href="#/currencies/{{currency.id_monnaie_crypto}}">{{currency.id_monnaie_crypto}}/{{currency.nom_monnaie_crypto}}</td>
+<div class="card">
+	<div class="card-header">
+		<h1>Crypto-Monnaies</h1>
+	</div>
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">ico</th>
+						<th scope="col">Symbol/Nom</th>
+						<th scope="col">Price</th>
+						<th scope="col">PCT</th>
+						<th scope="col">MarketCap</th>
+						<th scope="col">Total volume/24h</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="currency in currencies">
+						<td><img src="app/inc/img/{{currency.id_monnaie_crypto}}.png" height="32" width="32"></td>
+						<td><a href="#/currencies/{{currency.id_monnaie_crypto}}">{{currency.id_monnaie_crypto}}/{{currency.nom_monnaie_crypto}}</a></td>
 						<td>{{infoCurrencies[currency.id_monnaie_crypto][tradiCurrency].PRICE}}</td>
 						<td>{{infoCurrencies[currency.id_monnaie_crypto][tradiCurrency].CHANGEPCT24HOUR}}%</td>
 						<td>{{infoCurrencies[currency.id_monnaie_crypto][tradiCurrency].MKTCAP}}</td>
@@ -26,3 +28,4 @@
 			</table>
 		</div>
 	</div>
+</div>
