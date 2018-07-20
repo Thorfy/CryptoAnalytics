@@ -92,8 +92,8 @@ app.factory('ApiInfo', function($http, $q){
                         var toResolve = apiInfo.getFullData(cryptoArray).then(function(response){
                             deferred.resolve(response)
                         },function(error){
-                           deferred.reject(false)
-                        })
+                         deferred.reject(false)
+                     })
                         
                     },function(error){
                         deferred.reject(false)
@@ -125,16 +125,6 @@ app.factory('ApiInfo', function($http, $q){
 app.factory('GetHistoricalInfo', function($http, $q){
 
     var apiHistoricalInfo = {
-        getFullData: function(fsyms, tsyms){
-            var deferred = $q.defer()
-            $http.get("cryptoAnaliticsApi/fonction_api/apiPrice.php/?function=getPriceMultiFull&fsyms="+fsyms.toString()+"&tsyms="+tsyms.toString()).success(function(data, status){
-                deferred.resolve(data)
-            }).error(function(data, status){
-                deferred.reject(false)
-            })
-            return deferred.promise
-        },
-        
 
         getHistoricalDay: function(fsyms,tsyms){
             var deferred = $q.defer()
@@ -145,7 +135,6 @@ app.factory('GetHistoricalInfo', function($http, $q){
             })
             return deferred.promise
         }
-
     }
     return apiHistoricalInfo    
 

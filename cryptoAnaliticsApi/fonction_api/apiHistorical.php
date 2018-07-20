@@ -1,14 +1,14 @@
 <?php
 require('../core/core.php');
-if ($_GET['function']) {
+if (isset($_GET['function'])) {
 	$function = $_GET['function'];
-	if($_GET['fsyms']){
+	if(isset($_GET['fsyms'])){
 		$fsyms = $_GET['fsyms'];
 	}else{
 		$fsyms = ["BTC"];
 	}
 
-	if($_GET['tsyms']){
+	if(isset($_GET['tsyms'])){
 		$tsyms = $_GET['tsyms'];
 	}else{
 		$tsyms = ["USD"];
@@ -29,8 +29,8 @@ if ($_GET['function']) {
  */
 
 function getHistoricalDay($fsym, $tsym, $iLimit = 300) {
-    $sUrl = 'https://min-api.cryptocompare.com/data/histoday?fsym=' . $fsym . '&tsym=' . $tsym . '&limit=' . $iLimit;
-    return buildCurl($sUrl);
+	$sUrl = 'https://min-api.cryptocompare.com/data/histoday?fsym=' . $fsym . '&tsym=' . $tsym . '&limit=' . $iLimit;
+	return buildCurl($sUrl);
 }
 
 /*
@@ -42,8 +42,8 @@ function getHistoricalDay($fsym, $tsym, $iLimit = 300) {
  */
 
 function getHistoricalHour($fsym, $tsym, $iLimit = 100) {
-    $sUrl = 'https://min-api.cryptocompare.com/data/histohour?fsym=' . $fsym . '&tsym=' . $tsym . '&limit=' . $iLimit;
-    return buildCurl($sUrl);
+	$sUrl = 'https://min-api.cryptocompare.com/data/histohour?fsym=' . $fsym . '&tsym=' . $tsym . '&limit=' . $iLimit;
+	return buildCurl($sUrl);
 }
 
 /*
@@ -55,9 +55,9 @@ function getHistoricalHour($fsym, $tsym, $iLimit = 100) {
  */
 
 function getPriceHistorical($fsym, $tsyms, $iTimestamp) {
-    $sTSyms = implode(",", $tsyms);
-    $sUrl = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=' . $fsym . '&tsyms=' . $sTSyms . '&ts=' . $iTimestamp;
-    return buildCurl($sUrl);
+	$sTSyms = implode(",", $tsyms);
+	$sUrl = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=' . $fsym . '&tsyms=' . $sTSyms . '&ts=' . $iTimestamp;
+	return buildCurl($sUrl);
 }
 
 // test zone: you just need to call this page and uncomment

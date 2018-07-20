@@ -24,9 +24,9 @@ app.controller('currenciesCtrl', function($scope, ApiInfo){
         })
         $scope.symbolArray = output
         $scope.infoCurrencies = ApiInfo.getFullData($scope.symbolArray).then(function(success){
-           
+
             $scope.infoCurrencies = success
-             console.log($scope.infoCurrencies)
+            console.log($scope.infoCurrencies)
         },function(error){
             $scope.infoCurrencies = error
         })
@@ -62,56 +62,127 @@ app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistor
     })
 
     GetHistoricalInfo.getHistoricalDay([$routeParams.symbol],["USD"]).then(function(response){
-        var ohlc = [];
+        var ohlc = []
+        var volume = []
         for(var i = 0; i<response.Data.length; i++){
-            var stockObject = response.Data[i];
+            var stockObject = response.Data[i]
             var outputOhlc = [
             stockObject.time*1000,
             stockObject.close,
             stockObject.high,
             stockObject.low,
             stockObject.open
-        // stockObject.volumefrom,
-        // stockObject.volumeto
-        ]
-        ohlc.push(outputOhlc);
-    }
-
-    Highcharts.setOptions({
-        global: {
-            useUTC: false
+            ]
+            var outputVolume = [
+            stockObject.time*1000,
+            stockObject.volumefrom
+            ]
+            ohlc.push(outputOhlc);
+            volume.push(outputVolume);
         }
-    });
+        var groupingUnits = [
+        ['day',[1, 3, 6]],
+        ['week',[1, 3, 6]],
+        ['month',[1, 3, 6]], 
+        ['year',null]]
 
-     // create the chart
-     Highcharts.stockChart($routeParams.symbol, {
-
-        plotOptions: {
-            candlestick: {
-                color: '#28a745',
-                upColor: '#dc3545'
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
             }
-        },
+        })
 
-        rangeSelector: {
-            selected: 1
-        },
+        Highcharts.stockChart($routeParams.symbol, {
 
-        title: {
-            text: $routeParams.symbol
-        },
+            rangeSelector: {
+                selected: 1
+            },
 
-        series: [{
-            type: 'candlestick',
-            name: $routeParams.symbol,
-            data: ohlc,
-        }]
+            title: {
+                text: 'BTC'
+            },
+
+            yAxis: [{
+                startOnTick: false,
+                endOnTick: false,
+                labels: {
+                    align: 'right',
+                    x: -3
+                },
+                title: {
+                    text: 'OHLC'
+                },
+                height: '60%',
+                lineWidth: 2,
+                resize: {
+                    enabled: true
+                }
+            }, {
+                labels: {
+                    align: 'right',
+                    x: -3
+                },
+                title: {
+                    text: 'Volume'
+                },
+                top: '65%',
+                height: '35%',
+                offset: 0,
+                lineWidth: 2
+            }],
+
+            tooltip: {
+                split: true
+            },
+
+            navigator:{
+                adaptToUpdatedData:false
+            },
+
+            plotOptions: {
+                series: {
+                    dataGrouping: {
+                        units: groupingUnits
+                    }
+                }
+            },
+
+            series: [{
+                type: 'candlestick',
+                name: 'AAPL',
+                id: 'aapl',
+                zIndex: 2,
+                data: ohlc
+            }, {
+                type: 'column',
+                name: 'Volume',
+                id: 'volume',
+                data: volume,
+                yAxis: 1
+            }, {
+                type: 'vbp',
+                linkedTo: 'aapl',
+                params: {
+                    volumeSeriesID: 'volume'
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                zoneLines: {
+                    enabled: false
+                }
+            }, {
+                type: 'sma',
+                linkedTo: 'aapl',
+                zIndex: 1,
+                marker: {
+                    enabled: false
+                }
+            }]
+        })
     })
- })
-
-
-
 })
+
 
 
 app.controller('searchCtrl', function ($scope, ApiInfo){
@@ -143,6 +214,129 @@ app.controller("statBarCtrl",function ($scope, ApiInfo){
 })
 
 app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
+
+
+    GetHistoricalInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
+        var ohlc = []
+        var volume = []
+        for(var i = 0; i<response.Data.length; i++){
+            var stockObject = response.Data[i]
+            var outputOhlc = [
+            stockObject.time*1000,
+            stockObject.close,
+            stockObject.high,
+            stockObject.low,
+            stockObject.open
+            ]
+            var outputVolume = [
+            stockObject.time*1000,
+            stockObject.volumeto-stockObject.volumefrom
+            ]
+            ohlc.push(outputOhlc);
+            volume.push(outputVolume);
+        }
+        var groupingUnits = [
+        ['day',[1, 3, 6]],
+        ['week',[1, 3, 6]],
+        ['month',[1, 3, 6]], 
+        ['year',null]]
+
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        })
+
+        Highcharts.stockChart('container', {
+
+            rangeSelector: {
+                selected: 1
+            },
+
+            title: {
+                text: 'BTC'
+            },
+
+            yAxis: [{
+                startOnTick: false,
+                endOnTick: false,
+                labels: {
+                    align: 'right',
+                    x: -3
+                },
+                title: {
+                    text: 'OHLC'
+                },
+                height: '60%',
+                lineWidth: 2,
+                resize: {
+                    enabled: true
+                }
+            }, {
+                labels: {
+                    align: 'right',
+                    x: -3
+                },
+                title: {
+                    text: 'Volume'
+                },
+                top: '65%',
+                height: '35%',
+                offset: 0,
+                lineWidth: 2
+            }],
+
+            tooltip: {
+                split: true
+            },
+
+            plotOptions: {
+                series: {
+                    dataGrouping: {
+                        units: groupingUnits
+                    }
+                }
+            },
+
+            series: [{
+                type: 'candlestick',
+                name: 'AAPL',
+                id: 'aapl',
+                zIndex: 2,
+                data: ohlc
+            }, {
+                type: 'column',
+                name: 'Volume',
+                id: 'volume',
+                data: volume,
+                yAxis: 1
+            }, {
+                type: 'vbp',
+                linkedTo: 'aapl',
+                params: {
+                    volumeSeriesID: 'volume'
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                zoneLines: {
+                    enabled: false
+                }
+            }, {
+                type: 'sma',
+                linkedTo: 'aapl',
+                zIndex: 1,
+                marker: {
+                    enabled: false
+                }
+            }]
+        })
+    })
+})
+
+
+
+    /*
     GetHistoricalInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
         var ohlc = [];
         for(var i = 0; i<response.Data.length; i++){
@@ -190,6 +384,7 @@ app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
             }]
         })
     })
-})
+    */
+
 
 
