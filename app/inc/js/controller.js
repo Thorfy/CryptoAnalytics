@@ -8,7 +8,9 @@ app.config(function($routeProvider){
     .when('/connexion', {templateUrl:'app/inc/views/connexion.html'})
     .when('/inscription', {templateUrl:'app/inc/views/inscription.html'})
     .when('/account', {templateUrl:'app/inc/views/account.html', controller:'accountCtrl'})
-    .otherwise({redirectTo:'/'})
+    .when('/Privacy', {templateUrl:'app/inc/views/404.html',})
+    .when('/404', {templateUrl:'app/inc/views/404.html',})
+    .otherwise({redirectTo:'/404'})
 
 })
 
@@ -24,7 +26,6 @@ app.controller('currenciesCtrl', function($scope, ApiInfo){
         })
         $scope.symbolArray = output
         $scope.infoCurrencies = ApiInfo.getFullData($scope.symbolArray).then(function(success){
-
             $scope.infoCurrencies = success
         },function(error){
             $scope.infoCurrencies = error
