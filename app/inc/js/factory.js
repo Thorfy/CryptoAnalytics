@@ -1,4 +1,4 @@
-app.factory('GetUserConnection', function($http,$q){
+/*app.factory('GetUserConnection', function($http,$q){
     var userConnection  = {
         isConnected:false,
         testConnect: function(){
@@ -15,13 +15,14 @@ app.factory('GetUserConnection', function($http,$q){
     }
     return userConnection
 
-})
+})*/
 
 app.factory('ApiInfo', function($http, $q){
 
     var apiInfo = {
 
         /**************START PART CRYPTOCURRENCY IN BASE**********************/
+        $this: this,
         flagCryptoCurrency: false,
         cryptoCurrency: {},
         getCryptoCurrency: function(){
@@ -55,16 +56,16 @@ app.factory('ApiInfo', function($http, $q){
         flagTradiCurrency:false,
         tradiCurrency: {},
         getTradiCurrency: function(){
-            return apiTradiCurrency.flagTradiCurrency
+            return apiInfo.flagTradiCurrency
         },
         setTradiCurrency: function(){
             var deferred = $q.defer()
             $http.get("cryptoAnaliticsApi/fonction_api/apiCrypto.php/?getTradiCurrencies=true").success(function(data, status){
-                apiTradiCurrency.tradiCurrency = data
-                apiTradiCurrency.flagTradiCurrency = true
+                apiInfo.tradiCurrency = data
+                apiInfo.flagTradiCurrency = true
                 deferred.resolve(data)
             }).error(function(data, status){
-                apiTradiCurrency.flagTradiCurrency = false
+                apiInfo.flagTradiCurrency = false
                 deferred.reject(false)
             })
             return deferred.promise

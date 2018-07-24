@@ -7,6 +7,13 @@ if(isset($_GET["getCurrencies"]) && $_GET["getCurrencies"] === "true"){
 	}else{
 		echo json_encode("pas de connection");
 	}
+} else if(isset($_GET["getTradiCurrencies"]) && $_GET["getTradiCurrencies"] === "true"){
+	if ($result = $bdd->query("SELECT * FROM currency")) {
+		echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+		$result->close();
+	}else{
+		echo json_encode("pas de connection");
+	}
 }else{
 	echo json_encode("merci d'appeler une fonction valide");
 }

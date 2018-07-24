@@ -13,18 +13,18 @@
         <div class="card">
           <h5 class="card-header text-center">Inscription</h5>
           <div class="card-body">
-            <form>
+            <form ng-model="formInscription" novalidate>
               <div class="form-group">
                 <label for="exampleInputEmail1">Nom</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nom">
+                <input type="text" class="form-control" id="exampleInputLastName1" aria-describedby="emailHelp" placeholder="Nom" ng-model="newUser.lastname">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Prénom</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Prénom">
+                <input type="text" class="form-control" id="exampleInputFirstName1" aria-describedby="firstnameHelp" placeholder="Prénom" ng-model="newUser.firstname">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Adresse mail</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Adresse mail">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Adresse mail" ng-model="newUser.email">
               </div>
               <div class="row">
                 <div class="form-group col-lg-6">
@@ -33,9 +33,9 @@
                 </div>
                 <div class="form-group col-lg-6">
                   <label for="exampleInputPassword1">Confirmation du mot de passe</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe">
+                  <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Mot de passe" ng-model="newUser.password">
                 </div></div>
-                <button type="submit" class="btn btn-primary">Inscription</button>
+                <button type="submit" class="btn btn-primary" ng-click="addUserAndRedirect()">Inscription</button>
               </form>
             </div>
           </div>

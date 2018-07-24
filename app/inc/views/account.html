@@ -1,4 +1,4 @@
-<p>// JUST NEED TO PROVIDE A "user" IN THE SCOPE LIKE : </p>
+<!-- <p>// JUST NEED TO PROVIDE A "user" IN THE SCOPE LIKE : </p>
 <p><pre>
 	$scope.user = {
 	lastname: "string",
@@ -8,7 +8,7 @@
 	cryptos: ["string", "string"], (ex: ["BTC", "LTC"])
 	currency: "string", (ex: "EUR")
 }
-</pre></p>
+</pre></p> -->
 <div class="container">
 	<h1>Mon compte</h1>
 </div>
@@ -39,7 +39,7 @@
 				</div>
 				<div class="row">
 					<div class="col-12">
-						<input type="submit" id="submit-user" value="Enregister" class="btn btn-block btn-primary" />
+						<input type="submit" id="submit-user" value="Enregister" class="btn btn-block btn-primary" ng-click="saveUser()" />
 					</div>
 				</div>
 			</form>
@@ -53,18 +53,19 @@
 					<div class="col-12">
 						<div class="col-12 form-group">
 							<label class="form-label" for="crypto-user">Monnaies préférées :</label>
-							<select multiple ng-model="user.cryptos" class="form-control" ng-options="s as s for s in symbols.symbol track by s" />
+							<select multiple ng-model="user.cryptos" class="form-control" ng-options="s.id_monnaie_crypto as s.nom_monnaie_crypto for s in symbols track by s.id_monnaie_crypto" />
+							<p>Current : {{ {choice: user.cryptos} }}</p>
 						</div>
 						<div class="col-12 form-group">
 							<label class="form-label" for="currency-user">Currencies préférées :</label>
-							<select ng-model="user.currency" class="form-control">
-								<option value="USD">Dollars</option>
-								<option value="EUR">Euros</option>
+							<select multiple ng-model="user.currency" class="form-control" ng-options="c.id_currency as c.name_currency for c in currencies track by c.id_currency" />
 							</select>
+
+							<p>Current : {{ {choice: user.currency} }}</p>
 						</div>
 
 						<div class="col-12 form-group">
-							<input type="submit" id="submit-user-preferences" value="Enregister" class="btn btn-block btn-primary" />
+							<input type="submit" id="submit-user-preferences" value="Enregister" class="btn btn-block btn-primary" ng-click="saveUser()" />
 						</div>
 					</div>
 				</div>
@@ -74,32 +75,12 @@
 </div>
 
 
-<!-- <script>
-$("select[multiple]").each(function(i, select) {
-	select.onclick = function(){multiple($(this));};
-});
- 
-function multiple(selects) {
-	if(typeof selects=="string") { 
-		selects = $(selects); 
-	}
-	var opts = [];
-	selects.each(function(i, el) {
-		$(el.options).each(function(j, opt) {
-			$(opt)[0].onclick = function(){
-				let previousOptions = [];
-				$(el.options).each(function(x, option) {
-					if(option.selected) previousOptions.concat([option]);
-				})
-				$(el).val(previousOptions);
-			};
-		})
-	})
-}
-</script> -->
-
 
 <script> 
+	/*
+	
+		DESACTIVÉ CAR... CA MARCHE MOYEN...
+
 	$("select[multiple]").each(function(i, select) {
 		select.onclick = function(){multiple($(this));};
 	});
@@ -120,5 +101,5 @@ function multiple(selects) {
 				})(i);
 			}
 		})
-	}
+	}*/
 </script>

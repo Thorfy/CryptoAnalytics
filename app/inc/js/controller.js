@@ -1,12 +1,12 @@
-var app = angular.module("cryptoAnalytics", ["ngRoute"]);
+var app = angular.module("cryptoAnalytics", ["ngRoute", "ngResource"]);
 
-app.config(function($routeProvider){
+app.config(function($routeProvider, $resourceProvider){
     $routeProvider
     .when('/', {templateUrl:'app/inc/views/home.html'})
     .when('/currencies', {templateUrl:'app/inc/views/currencies.html', controller:'currenciesCtrl'})
     .when('/currencies/:symbol', {templateUrl:'app/inc/views/currency.html', controller:'currencyCtrl'})
-    .when('/connexion', {templateUrl:'app/inc/views/connexion.html'})
-    .when('/inscription', {templateUrl:'app/inc/views/inscription.html'})
+    .when('/connexion', {templateUrl:'app/inc/views/connexion.html', controller:'connectionInscriptionCtrl'})
+    .when('/inscription', {templateUrl:'app/inc/views/inscription.html', controller:'connectionInscriptionCtrl'})
     .when('/account', {templateUrl:'app/inc/views/account.html', controller:'accountCtrl'})
     .when('/Privacy', {templateUrl:'app/inc/views/404.html',})
     .when('/404', {templateUrl:'app/inc/views/404.html',})
@@ -37,12 +37,65 @@ app.controller('currenciesCtrl', function($scope, ApiInfo){
 
 })
 
-app.controller('connectionInscriptionCtrl', function($scope){
-    //TO DO GESTION CONNECTION
+app.controller('connectionInscriptionCtrl', function($scope, $resource, UserService, $window, $rootScope){
+    
+    var service = UserService;
+    $scope.users = null;
+    $scope.connexionValues = {email: null, password: null};
+    /*service.getUsers(function (users) {
+        $scope.users = users;
+    });*/
+    $scope.newUser = {};
+
+    $scope.addUserAndRedirect = function() {
+        $scope.addUser();
+        $window.location.href = '#/account';
+    }
+    $scope.addUser = function () {
+        service.addNewUser($scope.newUser, function () {
+            $scope.users.push($scope.newUser);
+            $rootScope.currentUser = $scope.newUser;
+        });
+    }
+
+    $scope.connect = function() {
+        service.checkUser($scope.connexionValues.email, $scope.connexionValues.password)
+            .then(function(user){
+                if(user.email){
+                    $rootScope.currentUser = user;
+                    $window.location.href = '#/account';
+                }
+                else{
+                    console.log('erreur');
+                }
+            })
+    }
 })
 
-app.controller('accountCtrl',function($scope){
-    //TO DO GESTION DES PREFERENCES
+app.controller('accountCtrl', function ($scope, UserService, ApiInfo, $window) {
+
+    var service = UserService;
+    $scope.user = service.getCurrentUser();
+    ApiInfo.getCryptoCurrency().then(function(success){
+        $scope.symbols = success
+    }, function(error){
+        $scope.symbols = error
+    })
+
+    ApiInfo.setTradiCurrency().then(function(success){
+        $scope.currencies = success
+    })
+
+    if(!$scope.user){
+        $window.location.href = '#/connexion';
+    }
+
+    $scope.saveUser = function() {
+        service.modifyUser($scope.user, function(){
+
+        })
+    }
+
 })
 
 app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistoricalInfo){

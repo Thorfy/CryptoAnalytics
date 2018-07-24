@@ -33,8 +33,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
 <script src="https://code.angularjs.org/1.2.32/angular-route.min.js"></script>
+<script src="https://code.angularjs.org/1.2.32/angular-resource.min.js"></script>
 <script src="app/inc/js/controller.js"></script>
 <script src="app/inc/js/factory.js"></script>
+<script src="app/inc/js/service.js"></script>
 
 <body style="background-color: #F6F6F6" ng-app="cryptoAnalytics">
 
@@ -57,10 +59,9 @@
                         Mon Compte
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" ng-controller="connectionInscriptionCtrl">
-                        <a class="dropdown-item" href="#/connexion">Se connecter</a>
-                        <a class="dropdown-item" href="#/inscription">S'inscrire</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#/account">Mes Préférences</a>
+                        <a ng-hide="currentUser" class="dropdown-item" href="#/connexion">Se connecter</a>
+                        <a ng-hide="currentUser" class="dropdown-item" href="#/inscription">S'inscrire</a>
+                        <a ng-show="currentUser" class="dropdown-item" href="#/account">Mes Préférences</a>
 
                     </div>
                 </li>
