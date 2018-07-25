@@ -8,7 +8,7 @@ if(isset($_REQUEST['function'])){
 }
 elseif(!function_exists($method)) die(json_encode(['error' => 'Action inconnue']));
 
-die($method());
+echo $method();
 
 
 function post(){
