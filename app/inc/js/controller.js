@@ -8,7 +8,7 @@ app.config(function($routeProvider, $resourceProvider){
     .when('/connexion', {templateUrl:'app/inc/views/connexion.html', controller:'connectionInscriptionCtrl'})
     .when('/inscription', {templateUrl:'app/inc/views/inscription.html', controller:'connectionInscriptionCtrl'})
     .when('/account', {templateUrl:'app/inc/views/account.html', controller:'accountCtrl'})
-    .when('/Privacy', {templateUrl:'app/inc/views/404.html',})
+    .when('/privacy', {templateUrl:'app/inc/views/privacy.html',})
     .when('/404', {templateUrl:'app/inc/views/404.html',})
     .otherwise({redirectTo:'/404'})
 
@@ -253,11 +253,11 @@ app.controller('searchCtrl', function ($scope, ApiInfo){
     })
 })
 
-app.controller("statBarCtrl",function ($scope, ApiInfo){
+app.controller("statBarCtrl",function ($scope, ApiInfo, $rootScope){
     //data preference ou data by default
     $scope.prefCryptoVal = ['BTC','LTC','ETH','EOS','XRP','BCH']
     $scope.prefTradiVal = ['USD']
-
+    if($rootScope.currentUser && $rootScope.currentUser.currency.length) $scope.prefTradiVal = [$rootScope.currentUser.currency[0]];
     $scope.name = ApiInfo.getCryptoCurrency().then(function(response){
         var output = []
         response.map(currency =>{
