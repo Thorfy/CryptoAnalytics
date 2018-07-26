@@ -158,7 +158,7 @@ app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistor
             },
 
             title: {
-                text: 'BTC'
+                text: $routeParams.symbol
             },
 
             yAxis: [{
@@ -273,10 +273,13 @@ app.controller("statBarCtrl",function ($scope, ApiInfo){
     })
 })
 
-app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
+app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo, $rootScope){
 
-
-    GetHistoricalInfo.getHistoricalDay(["BTC"],["USD"]).then(function(response){
+    let cryptos = ['BTC']
+    if($rootScope.currentUser && $rootScope.currentUser.cryptos.length) cryptos = [$rootScope.currentUser.cryptos[0]];
+    let currency = ['USD']
+    if($rootScope.currentUser && $rootScope.currentUser.currency.length) currency = [$rootScope.currentUser.currency[0]];
+    GetHistoricalInfo.getHistoricalDay(cryptos,currency).then(function(response){
         var ohlc = []
         var volume = []
         for(var i = 0; i<response.Data.length; i++){
@@ -290,7 +293,7 @@ app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
             ]
             var outputVolume = [
             stockObject.time*1000,
-            stockObject.volumeto-stockObject.volumefrom
+            stockObject.volumefrom
             ]
             ohlc.push(outputOhlc);
             volume.push(outputVolume);
@@ -314,13 +317,13 @@ app.controller("statPannelChartCtrl",function ($scope, GetHistoricalInfo){
             },
 
             title: {
-                text: 'BTC'
+                text: cryptos
             },
 
             credits:{
                 enabled:true,
-                href:"#/currencies/BTC",
-                text:"BTC - cryptoAnalytics"
+                href:"#/currencies/" + cryptos,
+                text: cryptos + " - cryptoAnalytics"
             },
 
             yAxis: [{

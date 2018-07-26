@@ -52,16 +52,16 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="col-12 form-group">
-							<label class="form-label" for="crypto-user">Monnaies préférées :</label>
+							<label class="form-label" for="crypto-user">Monnaies préférées : <span ng-repeat=" crypto in user.cryptos"> {{crypto}}</span></label>
 							<select multiple ng-model="user.cryptos" class="form-control" ng-options="s.id_monnaie_crypto as s.nom_monnaie_crypto for s in symbols track by s.id_monnaie_crypto" />
-							<p>Current : {{ {choice: user.cryptos} }}</p>
+							<!--<p>Current : {{ {choice: user.cryptos} }}</p>-->
 						</div>
 						<div class="col-12 form-group">
-							<label class="form-label" for="currency-user">Currencies préférées :</label>
+							<label class="form-label" for="currency-user">Currencies préférées : <span ng-repeat="currencye in user.currency">{{ currencye }}</span></label>
 							<select multiple ng-model="user.currency" class="form-control" ng-options="c.id_currency as c.name_currency for c in currencies track by c.id_currency" />
 							</select>
 
-							<p>Current : {{ {choice: user.currency} }}</p>
+						<!--	<p>Current : {{ {choice: user.currency} }}</p>-->
 						</div>
 
 						<div class="col-12 form-group">
