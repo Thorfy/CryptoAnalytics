@@ -14,10 +14,11 @@ app.config(function($routeProvider, $resourceProvider){
 
 })
 
-app.controller('currenciesCtrl', function($scope, ApiInfo){
+app.controller('currenciesCtrl', function($scope, ApiInfo, $rootScope){
 
 
     $scope.tradiCurrency = 'USD'
+    if($rootScope.currentUser && $rootScope.currentUser.currency.length) $scope.tradiCurrency = $rootScope.currentUser.currency[0];
     $scope.currencies = ApiInfo.getCryptoCurrency().then(function(response){
         $scope.currencies = response
         var output = []
@@ -98,7 +99,7 @@ app.controller('accountCtrl', function ($scope, UserService, ApiInfo, $window) {
 
 })
 
-app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistoricalInfo){
+app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistoricalInfo, $rootScope){
     $scope.name = ApiInfo.getCryptoCurrency().then(function(response){
         var output = []
         response.map(currency =>{
@@ -107,6 +108,7 @@ app.controller('currencyCtrl', function($scope, $routeParams, ApiInfo, GetHistor
         $scope.name = output[$routeParams.symbol]
     })
     $scope.tradiCurrency = 'USD'
+    if($rootScope.currentUser && $rootScope.currentUser.currency.length) $scope.tradiCurrency = $rootScope.currentUser.currency[0];
     $scope.symbol = $routeParams.symbol
     $scope.currency = ApiInfo.getFullData([$scope.symbol]).then(function(success){
         $scope.currency = success
